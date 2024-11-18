@@ -50,7 +50,7 @@ public class Realisateur {
         return;
     }
 
-    public List<Film> getFilmRelealises() {
+    public List<Film> getFilmRealises() {
         return filmRealises;
     }
 
