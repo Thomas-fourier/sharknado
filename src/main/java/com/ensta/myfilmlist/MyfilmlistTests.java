@@ -1,77 +1,89 @@
 package com.ensta.myfilmlist;
 
+import java.time.LocalDate;
+import java.util.ArrayList;
+import java.util.List;
+
+import com.ensta.myfilmlist.exception.ServiceException;
+import com.ensta.myfilmlist.model.Film;
+import com.ensta.myfilmlist.model.Realisateur;
+import com.ensta.myfilmlist.service.impl.MyFilmsServiceImpl;
+import com.ensta.myfilmlist.service.MyFilmsService;
+
+
 /**
  * Classe de tests du service MyFilmsServiceImpl.
  */
 public class MyfilmlistTests {
 
 	/** Initialisation du service pour les traitements de l'application MyFilms */
-//	private MyFilmsService myFilmsService = new MyFilmsServiceImpl();
+	private MyFilmsService myFilmsService = new MyFilmsServiceImpl();
 
 	/**
 	 * Permet de tester la mise a jour du statut "celebre" d'un RealisateurDTO en fonction du nombre de films realises.
 	 */
 	public void updateRealisateurCelebreTest() {
-//		// Creation des Realisateurs
-//
-//		Realisateur jamesCameron = new Realisateur();
-//		jamesCameron.setNom("Cameron");
-//		jamesCameron.setPrenom("James");
-//		jamesCameron.setDateNaissance(LocalDate.of(1954, 8, 16));
-//
-//		Realisateur peterJackson = new Realisateur();
-//		peterJackson.setNom("Jackson");
-//		peterJackson.setPrenom("Peter");
-//		peterJackson.setDateNaissance(LocalDate.of(1961, 10, 31));
-//
-//		// Creation des films
-//
-//		Film avatar = new Film();
-//		avatar.setTitre("Avatar");
-//		avatar.setDuree(162);
-//		avatar.setRealisateur(jamesCameron);
-//
-//		Film laCommunauteDeLAnneau = new Film();
-//		laCommunauteDeLAnneau.setTitre("La communauté de l'anneau");
-//		laCommunauteDeLAnneau.setDuree(178);
-//		laCommunauteDeLAnneau.setRealisateur(peterJackson);
-//
-//		Film lesDeuxTours = new Film();
-//		lesDeuxTours.setTitre("Les deux tours");
-//		lesDeuxTours.setDuree(179);
-//		lesDeuxTours.setRealisateur(peterJackson);
-//
-//		Film leRetourDuRoi = new Film();
-//		leRetourDuRoi.setTitre("Le retour du roi");
-//		leRetourDuRoi.setDuree(201);
-//		leRetourDuRoi.setRealisateur(peterJackson);
-//
-//		// Affectation des films aux realisateurs
-//
-//		List<Film> peterJacksonFilms = new ArrayList<>();
-//		peterJacksonFilms.add(laCommunauteDeLAnneau);
-//		peterJacksonFilms.add(lesDeuxTours);
-//		peterJacksonFilms.add(leRetourDuRoi);
-//		peterJackson.setFilmRealises(peterJacksonFilms);
-//
-//		List<Film> jamesCameronFilms = new ArrayList<>();
-//		jamesCameronFilms.add(avatar);
-//		jamesCameron.setFilmRealises(jamesCameronFilms);
-//
-//		// Mise a jour du statut "celebre" des Realisateurs
-//
-//		try {
-//			jamesCameron = myFilmsService.updateRealisateurCelebre(jamesCameron);
-//			peterJackson = myFilmsService.updateRealisateurCelebre(peterJackson);
-//
-//			// Attendue : false
-//			System.out.println("James Cameron est-il celebre ? " + jamesCameron.isCelebre());
-//			// Attendue : true
-//			System.out.println("Peter Jackson est-il celebre ? " + peterJackson.isCelebre());
-//		} catch (ServiceException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+		// Creation des Realisateurs
+
+		Realisateur jamesCameron = new Realisateur();
+		jamesCameron.setNom("Cameron");
+		jamesCameron.setPrenom("James");
+		jamesCameron.setDateNaissance(LocalDate.of(1954, 8, 16));
+
+		Realisateur peterJackson = new Realisateur();
+		peterJackson.setNom("Jackson");
+		peterJackson.setPrenom("Peter");
+		peterJackson.setDateNaissance(LocalDate.of(1961, 10, 31));
+
+		// Creation des films
+
+		Film avatar = new Film();
+		avatar.setTitre("Avatar");
+		avatar.setDuree(162);
+		avatar.setRealisateur(jamesCameron);
+
+		Film laCommunauteDeLAnneau = new Film();
+		laCommunauteDeLAnneau.setTitre("La communauté de l'anneau");
+		laCommunauteDeLAnneau.setDuree(178);
+		laCommunauteDeLAnneau.setRealisateur(peterJackson);
+
+		Film lesDeuxTours = new Film();
+		lesDeuxTours.setTitre("Les deux tours");
+		lesDeuxTours.setDuree(179);
+		lesDeuxTours.setRealisateur(peterJackson);
+
+		Film leRetourDuRoi = new Film();
+		leRetourDuRoi.setTitre("Le retour du roi");
+		leRetourDuRoi.setDuree(201);
+		leRetourDuRoi.setRealisateur(peterJackson);
+
+		// Affectation des films aux realisateurs
+
+		List<Film> peterJacksonFilms = new ArrayList<>();
+		peterJacksonFilms.add(laCommunauteDeLAnneau);
+		peterJacksonFilms.add(lesDeuxTours);
+		peterJacksonFilms.add(leRetourDuRoi);
+		peterJackson.setFilmRealises(peterJacksonFilms);
+
+		List<Film> jamesCameronFilms = new ArrayList<>();
+		jamesCameronFilms.add(avatar);
+		jamesCameron.setFilmRealises(jamesCameronFilms);
+
+		// Mise a jour du statut "celebre" des Realisateurs
+
+		try {
+			jamesCameron = myFilmsService.updateRealisateurCelebre(jamesCameron);
+			peterJackson = myFilmsService.updateRealisateurCelebre(peterJackson);
+
+			// Attendue : false
+			System.out.println("James Cameron est-il celebre ? " + jamesCameron.getCelebre());
+			// Attendue : true
+			System.out.println("Peter Jackson est-il celebre ? " + peterJackson.getCelebre());
+		} catch (ServiceException e) {
+			System.out.println("Failure");
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
 	}
 
 	/**
