@@ -30,7 +30,7 @@ public class MyFilmsServiceImpl implements MyFilmsService {
 
     /**
      * Calcul la durée total de la liste de films
-     * @param films
+     * @param films liste des films
      * @return Retourne la durée totale de la liste de films
      */
     public int calculerDureeTotale(List<Film> films) {
@@ -46,9 +46,13 @@ public class MyFilmsServiceImpl implements MyFilmsService {
 
     @Override
     public List<FilmDTO> findAllFilms() throws ServiceException {
-        FilmDAO bdd_access = new JdbcFilmDAO();
+        try {
+            FilmDAO bdd_access = new JdbcFilmDAO();
 
-        return FilmMapper.convertFilmToFilmDTOs(bdd_access.findAll());
+            return FilmMapper.convertFilmToFilmDTOs(bdd_access.findAll());
+        } catch (Exception e) {
+            throw new ServiceException("Error while finding films", e);
+        }
     }
 
 
