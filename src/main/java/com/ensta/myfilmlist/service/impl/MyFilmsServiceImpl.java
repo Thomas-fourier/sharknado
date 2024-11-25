@@ -96,5 +96,19 @@ public class MyFilmsServiceImpl implements MyFilmsService {
         }
     }
 
+    @Override
+    public FilmDTO findFilmById(long id) throws ServiceException {
+        FilmDAO filmDAO = new JdbcFilmDAO();
+        Optional<Film> film = filmDAO.findById(id);
+        return film.map(FilmMapper::convertFilmToFilmDTO).orElse(null);
+    }
+
+    @Override
+    public void deleteFilm(long id) throws ServiceException {
+        FilmDAO filmDAO = new JdbcFilmDAO();
+        filmDAO.delete(filmDAO.findById(id).orElse(null));
+
+    }
+
 
 }

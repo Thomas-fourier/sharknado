@@ -4,9 +4,9 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 
 import com.ensta.myfilmlist.dao.FilmDAO;
-import com.ensta.myfilmlist.dao.RealisateurDAO;
 import com.ensta.myfilmlist.model.Film;
 import com.ensta.myfilmlist.model.Realisateur;
 import com.ensta.myfilmlist.persistence.ConnectionManager;
@@ -68,6 +68,36 @@ public class JdbcFilmDAO implements FilmDAO {
         film.setId(jdbcTemplate.queryForObject(query, Long.class, film.getTitre(), film.getDuree(), film.getRealisateur().getId()));
 
         return film;
+    }
+
+    @Override
+    public Optional<Film> findById(long id) {
+        String query = "SELECT * FROM Film JOIN Realisateur ON Film.realisateur_id = Realisateur.id WHERE Film.id = ?";
+
+        try {
+            return Optional.ofNullable(jdbcTemplate.queryForObject(query, new JdbcFilmDAO.FilmRowMapper(), id));
+        } catch (Exception e) {
+            return Optional.empty();
+        }
+    }
+
+    @Override
+    public void delete(Film film) {
+        if (film != null) {
+            jdbcTemplate.update("Delete FROM Film WHERE id = ?", film.getId());
+        }
+    }
+
+    @Override
+    public List<Film> findByRealisateurId(long realisateurId) {
+        String query = "SELECT * FROM Film WHERE realisateur_id = ?";
+
+        try {
+            return jdbcTemplate.query(query, new JdbcFilmDAO.FilmRowMapper(), realisateurId);
+        } catch (Exception e) {
+            return List.of();
+        }
+
     }
 }
 
