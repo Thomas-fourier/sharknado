@@ -23,12 +23,15 @@ public class MyFilmsServiceImpl implements MyFilmsService {
         }
     }
 
+    /**
+     * Calcul la durée total de la liste de films
+     * @param films
+     * @return Retourne la durée totale de la liste de films
+     */
     public int calculerDureeTotale(List<Film> films) {
-        AtomicInteger res = new AtomicInteger();
-        films.forEach(film -> {
-            res.addAndGet(film.getDuree());
-        });
-
-        return res.get();
+        return films.stream()
+                .mapToInt(Film::getDuree)
+                .sum();
     }
+
 }
