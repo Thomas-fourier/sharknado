@@ -5,8 +5,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
-import javax.sql.DataSource;
-
 import com.ensta.myfilmlist.dao.FilmDAO;
 import com.ensta.myfilmlist.model.Film;
 import com.ensta.myfilmlist.persistence.ConnectionManager;
@@ -18,8 +16,7 @@ import org.springframework.jdbc.core.RowMapper;
 
 public class JdbcFilmDAO implements FilmDAO {
 
-    private DataSource dataSource = ConnectionManager.getDataSource();
-    private JdbcTemplate jdbcTemplate = ConnectionManager.getJdbcTemplate();
+    private final JdbcTemplate jdbcTemplate = ConnectionManager.getJdbcTemplate();
 
     private static class filmRowMapper implements RowMapper<Film> {
         @Override
@@ -43,6 +40,7 @@ public class JdbcFilmDAO implements FilmDAO {
             return jdbcTemplate.query(query, new filmRowMapper());
         } catch (Exception e) {
             // Log and handle exception (for simplicity, print stack trace)
+            System.out.println("Error while fetching films from database.");
             e.printStackTrace();
 
             return new ArrayList<>();
