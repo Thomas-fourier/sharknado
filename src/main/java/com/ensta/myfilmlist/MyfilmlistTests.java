@@ -120,16 +120,16 @@ public class MyfilmlistTests {
 	 * Permet de tester le calcul de la note moyenne des films.
 	 */
 	public void calculerNoteMoyenneTest() {
-//		// Creation des notes
-//
-//		double[] notes = { 18, 15.5, 12 };
-//
-//		// Calcul de la note moyenne
-//
-//		double noteMoyenne = myFilmsService.calculerNoteMoyenne(notes);
-//
-//		// Attendue : 15,17
-//		System.out.println("La note moyenne est : " + noteMoyenne);
+		// Creation des notes
+
+		double[] notes = { 18, 15.5, 12 };
+
+		// Calcul de la note moyenne
+
+		double noteMoyenne = myFilmsService.calculerNoteMoyenne(notes);
+
+		// Attendue : 15,17
+		System.out.println("La note moyenne est : " + noteMoyenne);
 	}
 
 	/**

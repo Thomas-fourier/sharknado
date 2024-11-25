@@ -34,4 +34,14 @@ public class MyFilmsServiceImpl implements MyFilmsService {
                 .sum();
     }
 
+    @Override
+    public double calculerNoteMoyenne(double[] notes) {
+        double res = 0;
+        for (int i = 0; i < notes.length; i++) {
+            res += notes[i];
+        }
+        return (double) Math.round(100 * res / notes.length) / 100;
+    }
+
+
 }
