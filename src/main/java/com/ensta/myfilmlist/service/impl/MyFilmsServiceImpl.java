@@ -3,6 +3,8 @@ import com.ensta.myfilmlist.model.Film;
 import com.ensta.myfilmlist.service.MyFilmsService;
 import com.ensta.myfilmlist.model.Realisateur;
 import com.ensta.myfilmlist.exception.ServiceException;
+
+import java.util.Arrays;
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
 
@@ -36,12 +38,7 @@ public class MyFilmsServiceImpl implements MyFilmsService {
 
     @Override
     public double calculerNoteMoyenne(double[] notes) {
-        double res = 0;
-        for (int i = 0; i < notes.length; i++) {
-            res += notes[i];
-        }
-        return (double) Math.round(100 * res / notes.length) / 100;
+        return Arrays.stream(notes).average().orElse(0.0);
     }
-
 
 }
