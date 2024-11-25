@@ -6,7 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.ensta.myfilmlist.dao.FilmDAO;
+import com.ensta.myfilmlist.dao.RealisateurDAO;
 import com.ensta.myfilmlist.model.Film;
+import com.ensta.myfilmlist.model.Realisateur;
 import com.ensta.myfilmlist.persistence.ConnectionManager;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -25,7 +27,16 @@ public class JdbcFilmDAO implements FilmDAO {
             Film film = new Film();
             film.setTitre(rs.getString("titre"));
             film.setDuree(rs.getInt("duree"));
-            film.setId(rs.getInt("realisateur_id"));
+            film.setId(rs.getInt("film.id"));
+
+            Realisateur realisateur = new Realisateur();
+            realisateur.setId(rs.getInt("realisateur_id"));
+            realisateur.setNom(rs.getString("nom"));
+            realisateur.setPrenom(rs.getString("prenom"));
+            realisateur.setCelebre(rs.getBoolean("celebre"));
+            realisateur.setDateNaissance(rs.getDate("date_naissance").toLocalDate());
+
+            film.setRealisateur(realisateur);
 
             return film;
         }
@@ -33,7 +44,7 @@ public class JdbcFilmDAO implements FilmDAO {
 
     @Override
     public List<Film> findAll() {
-        String query = "SELECT * FROM FILM";
+        String query = "SELECT * FROM FILM JOIN Realisateur ON film.realisateur_id = Realisateur.id";
 
 
         try {
