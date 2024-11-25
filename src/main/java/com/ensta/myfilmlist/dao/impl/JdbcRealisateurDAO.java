@@ -68,4 +68,17 @@ public class JdbcRealisateurDAO implements RealisateurDAO {
             return Optional.empty();
         }
     }
+
+    @Override
+    public Realisateur update(Realisateur realisateur) {
+        try {
+            jdbcTemplate.update(
+                    "UPDATE realisateur SET NOM = ?, PRENOM = ?, DATE_NAISSANCE = ?, CELEBRE = ? WHERE id = ?",
+                    realisateur.getNom(), realisateur.getPrenom(), realisateur.getDateNaissance(),
+                    realisateur.getCelebre(), realisateur.getId());
+            return realisateur;
+        } catch (Exception e) {
+            throw e;
+        }
+    }
 }

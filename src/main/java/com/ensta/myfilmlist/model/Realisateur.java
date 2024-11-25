@@ -1,5 +1,8 @@
 package com.ensta.myfilmlist.model;
 
+import com.ensta.myfilmlist.dao.FilmDAO;
+import com.ensta.myfilmlist.dao.impl.JdbcFilmDAO;
+
 import java.time.LocalDate;
 import java.util.List;
 
@@ -51,6 +54,9 @@ public class Realisateur {
     }
 
     public List<Film> getFilmRealises() {
+        FilmDAO filmDAO = new JdbcFilmDAO();
+        filmRealises = filmDAO.findByRealisateurId(id);
+
         return filmRealises;
     }
 

@@ -90,7 +90,8 @@ public class JdbcFilmDAO implements FilmDAO {
 
     @Override
     public List<Film> findByRealisateurId(long realisateurId) {
-        String query = "SELECT * FROM Film WHERE realisateur_id = ?";
+        String query =
+                "SELECT * FROM Film JOIN Realisateur ON Film.realisateur_id = Realisateur.id  WHERE realisateur_id = ?";
 
         try {
             return jdbcTemplate.query(query, new JdbcFilmDAO.FilmRowMapper(), realisateurId);

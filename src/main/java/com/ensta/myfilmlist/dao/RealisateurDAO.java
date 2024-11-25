@@ -13,4 +13,6 @@ public interface RealisateurDAO {
 
     Optional<Realisateur> findById(long id);
 
+    Realisateur update(Realisateur realisateur);
+
 }

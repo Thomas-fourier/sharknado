@@ -23,11 +23,9 @@ public class MyFilmsServiceImpl implements MyFilmsService {
     @Override
     public Realisateur updateRealisateurCelebre(Realisateur Real) throws ServiceException {
         try {
-            if (Real.getFilmRealises().size() >= NB_FILMS_MIN_REALISATEUR_CELEBRE) {
-                Real.setCelebre(true);
-            } else {
-                Real.setCelebre(false);
-            }
+            Real.setCelebre(Real.getFilmRealises().size() >= NB_FILMS_MIN_REALISATEUR_CELEBRE);
+            RealisateurDAO realisateurDAO = new JdbcRealisateurDAO();
+            realisateurDAO.update(Real);
             return Real;
         } catch (Exception e) {
             throw new ServiceException("Une erreur est survenue lors du traitement de Real.", e);
@@ -72,8 +70,9 @@ public class MyFilmsServiceImpl implements MyFilmsService {
         if (re.isPresent()) {
             film.setRealisateur(re.get());
             FilmDAO filmDAO = new JdbcFilmDAO();
-
-            return FilmMapper.convertFilmToFilmDTO(filmDAO.save(film));
+            Film ret = filmDAO.save(film);
+            ret.setRealisateur(updateRealisateurCelebre(film.getRealisateur()));
+            return FilmMapper.convertFilmToFilmDTO(ret);
         }
 
         throw new ServiceException("Couldn't find realisateur");
@@ -106,8 +105,12 @@ public class MyFilmsServiceImpl implements MyFilmsService {
     @Override
     public void deleteFilm(long id) throws ServiceException {
         FilmDAO filmDAO = new JdbcFilmDAO();
-        filmDAO.delete(filmDAO.findById(id).orElse(null));
+        Optional<Film> film = filmDAO.findById(id);
 
+        if (film.isPresent()) {
+            filmDAO.delete(film.get());
+            updateRealisateurCelebre(film.get().getRealisateur());
+        }
     }
 
 
