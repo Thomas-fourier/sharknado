@@ -1,4 +1,5 @@
 package com.ensta.myfilmlist.service;
+import com.ensta.myfilmlist.dto.FilmDTO;
 import com.ensta.myfilmlist.exception.ServiceException;
 import com.ensta.myfilmlist.model.Film;
 import com.ensta.myfilmlist.model.Realisateur;
@@ -29,4 +30,11 @@ public interface MyFilmsService {
      * @return Moyenne des notes arrondi à 2 chiffres après la virgule.
      */
     public double calculerNoteMoyenne(double[] notes);
+
+    /**
+     * Get all the films in database
+     *
+     * @return the list of all the films DTOs
+     */
+    public List<FilmDTO> findAllFilms() throws ServiceException;
 }
