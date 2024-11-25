@@ -16,9 +16,9 @@ import org.springframework.jdbc.core.RowMapper;
 
 public class JdbcFilmDAO implements FilmDAO {
 
-    private final JdbcTemplate jdbcTemplate = ConnectionManager.getJdbcTemplate();
+    private final JdbcTemplate jdbcTemplate = new JdbcTemplate(ConnectionManager.getDataSource());
 
-    private static class filmRowMapper implements RowMapper<Film> {
+    private static class FilmRowMapper implements RowMapper<Film> {
         @Override
         public Film mapRow(ResultSet rs, int rowNum) throws SQLException {
 
@@ -37,7 +37,7 @@ public class JdbcFilmDAO implements FilmDAO {
 
 
         try {
-            return jdbcTemplate.query(query, new filmRowMapper());
+            return jdbcTemplate.query(query, new FilmRowMapper());
         } catch (Exception e) {
             // Log and handle exception (for simplicity, print stack trace)
             System.out.println("Error while fetching films from database.");
@@ -45,6 +45,18 @@ public class JdbcFilmDAO implements FilmDAO {
 
             return new ArrayList<>();
         }
+    }
+
+    @Override
+    public Film save(Film film) {
+        String query = "INSERT INTO Film(titre, duree, realisateur_id) VALUES(?, ?, ?);";
+
+        jdbcTemplate.update(query, film.getTitre(), film.getDuree(), film.getRealisateur().getId());
+
+        query = "SELECT id FROM FILM WHERE titre = ? AND duree = ? and realisateur_id = ?";
+        film.setId(jdbcTemplate.queryForObject(query, Long.class, film.getTitre(), film.getDuree(), film.getRealisateur().getId()));
+
+        return film;
     }
 }
 

@@ -5,7 +5,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 import com.ensta.myfilmlist.dto.FilmDTO;
+import com.ensta.myfilmlist.dto.RealisateurDTO;
 import com.ensta.myfilmlist.exception.ServiceException;
+import com.ensta.myfilmlist.form.FilmForm;
 import com.ensta.myfilmlist.model.Film;
 import com.ensta.myfilmlist.model.Realisateur;
 import com.ensta.myfilmlist.service.impl.MyFilmsServiceImpl;
@@ -153,27 +155,29 @@ public class MyfilmlistTests {
 	 * Permet de tester la creation des films.
 	 */
 	public void createFilmTest() {
-//		try {
-//			RealisateurDTO realisateurDTO = myFilmsService.findRealisateurByNomAndPrenom("Cameron", "James");
-//
-//			FilmForm titanic = new FilmForm();
-//			titanic.setTitre("Titanic");
-//			titanic.setDuree(195);
-//			titanic.setRealisateurId(realisateurDTO.getId());
-//
-//			FilmDTO newFilm = myFilmsService.createFilm(titanic);
-//
-//			System.out.println("Le nouveau film 'Titanic' possede l'id : " + newFilm.getId());
-//
-//			List<FilmDTO> films = myFilmsService.findAllFilms();
-//
-//			// Attendue : 5
-//			System.out.println("Combien y a-t-il de films ? " + films.size());
-//
-//			films.forEach(f -> System.out.println("Le realisateur du film : '" + f.getTitre() + "' est : " + f.getRealisateur()));
-//		} catch (ServiceException e) {
-//			e.printStackTrace();
-//		}
+		try {
+			RealisateurDTO realisateurDTO = myFilmsService.findRealisateurByNomAndPrenom("Cameron", "James");
+
+			System.out.println("Realisateur Cameron ID:" + realisateurDTO.getId());
+
+			FilmForm titanic = new FilmForm();
+			titanic.setTitre("Titanic");
+			titanic.setDuree(195);
+			titanic.setRealisateurId(realisateurDTO.getId());
+
+			FilmDTO newFilm = myFilmsService.createFilm(titanic);
+
+			System.out.println("Le nouveau film 'Titanic' possede l'id : " + newFilm.getId());
+
+			List<FilmDTO> films = myFilmsService.findAllFilms();
+
+			// Attendue : 5
+			System.out.println("Combien y a-t-il de films ? " + films.size());
+
+			films.forEach(f -> System.out.println("Le realisateur du film : '" + f.getTitre() + "' est : " + f.getRealisateur()));
+		} catch (ServiceException e) {
+			e.printStackTrace();
+		}
 	}
 
 	/**

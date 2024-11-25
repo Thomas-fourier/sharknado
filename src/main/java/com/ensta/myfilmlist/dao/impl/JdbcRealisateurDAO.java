@@ -1,7 +1,6 @@
 package com.ensta.myfilmlist.dao.impl;
 
 import com.ensta.myfilmlist.dao.RealisateurDAO;
-import com.ensta.myfilmlist.model.Film;
 import com.ensta.myfilmlist.model.Realisateur;
 import com.ensta.myfilmlist.persistence.ConnectionManager;
 import org.springframework.dao.EmptyResultDataAccessException;
@@ -16,8 +15,7 @@ import java.util.Optional;
 
 public class JdbcRealisateurDAO implements RealisateurDAO {
 
-
-    private JdbcTemplate jdbcTemplate = ConnectionManager.getJdbcTemplate();
+    private final JdbcTemplate jdbcTemplate = new JdbcTemplate(ConnectionManager.getDataSource());
 
     private static class RealisateurRowMapper implements RowMapper<Realisateur> {
         @Override
@@ -39,7 +37,6 @@ public class JdbcRealisateurDAO implements RealisateurDAO {
         String query = "SELECT * FROM Realisateur";
 
         try {
-            JdbcTemplate jdbcTemplate = new JdbcTemplate();
             return jdbcTemplate.query(query, new RealisateurRowMapper());
         } catch (Exception e) {
             // Log and handle exception (for simplicity, print stack trace)
@@ -50,11 +47,11 @@ public class JdbcRealisateurDAO implements RealisateurDAO {
     }
 
     @Override
-    public Realisateur findByNomAndPrenom(String nom, String prenom) throws EmptyResultDataAccessException {
+    public Realisateur
+    findByNomAndPrenom(String nom, String prenom) throws EmptyResultDataAccessException {
         String query = "SELECT * FROM Realisateur WHERE nom = ? AND prenom = ?";
 
         try {
-            JdbcTemplate jdbcTemplate = new JdbcTemplate();
             return jdbcTemplate.queryForObject(query, new RealisateurRowMapper(), nom, prenom);
         } catch (Exception e) {
             throw  new EmptyResultDataAccessException("Realisateur non trouvé ou trouvé plusieurs fois.",1,e);
@@ -66,7 +63,6 @@ public class JdbcRealisateurDAO implements RealisateurDAO {
         String query = "SELECT * FROM Realisateur WHERE id = ?";
 
         try {
-            JdbcTemplate jdbcTemplate = new JdbcTemplate();
             return Optional.ofNullable(jdbcTemplate.queryForObject(query, new RealisateurRowMapper(), id));
         } catch (Exception e) {
             return Optional.empty();
