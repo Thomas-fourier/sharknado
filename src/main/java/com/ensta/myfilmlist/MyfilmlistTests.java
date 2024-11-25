@@ -90,30 +90,30 @@ public class MyfilmlistTests {
 	 * Permet de tester le calcul de la duree totale des films.
 	 */
 	public void calculerDureeTotaleTest() {
-//		// Creation des films
-//
-//		Film laCommunauteDeLAnneau = new Film();
-//		laCommunauteDeLAnneau.setTitre("La communauté de l'anneau");
-//		laCommunauteDeLAnneau.setDuree(178);
-//
-//		Film lesDeuxTours = new Film();
-//		lesDeuxTours.setTitre("Les deux tours");
-//		lesDeuxTours.setDuree(179);
-//
-//		Film leRetourDuRoi = new Film();
-//		leRetourDuRoi.setTitre("Le retour du roi");
-//		leRetourDuRoi.setDuree(201);
-//
-//		List<Film> leSeigneurDesAnneaux = new ArrayList<>();
-//		leSeigneurDesAnneaux.add(laCommunauteDeLAnneau);
-//		leSeigneurDesAnneaux.add(lesDeuxTours);
-//		leSeigneurDesAnneaux.add(leRetourDuRoi);
-//
-//		// Calcule de la duree totale
-//
-//		long dureeTotale = myFilmsService.calculerDureeTotale(leSeigneurDesAnneaux);
-//		// Attendue : 558 minutes
-//		System.out.println("La duree totale de la trilogie \"Le Seigneur des Anneaux\" est de : " + dureeTotale + " minutes");
+		// Creation des films
+
+		Film laCommunauteDeLAnneau = new Film();
+		laCommunauteDeLAnneau.setTitre("La communauté de l'anneau");
+		laCommunauteDeLAnneau.setDuree(178);
+
+		Film lesDeuxTours = new Film();
+		lesDeuxTours.setTitre("Les deux tours");
+		lesDeuxTours.setDuree(179);
+
+		Film leRetourDuRoi = new Film();
+		leRetourDuRoi.setTitre("Le retour du roi");
+		leRetourDuRoi.setDuree(201);
+
+		List<Film> leSeigneurDesAnneaux = new ArrayList<>();
+		leSeigneurDesAnneaux.add(laCommunauteDeLAnneau);
+		leSeigneurDesAnneaux.add(lesDeuxTours);
+		leSeigneurDesAnneaux.add(leRetourDuRoi);
+
+		// Calcule de la duree totale
+
+		long dureeTotale = myFilmsService.calculerDureeTotale(leSeigneurDesAnneaux);
+		// Attendue : 558 minutes
+		System.out.println("La duree totale de la trilogie \"Le Seigneur des Anneaux\" est de : " + dureeTotale + " minutes");
 	}
 
 	/**
