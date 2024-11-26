@@ -7,20 +7,25 @@ import java.util.List;
 import java.util.Optional;
 
 import com.ensta.myfilmlist.dao.FilmDAO;
+import com.ensta.myfilmlist.dao.RealisateurDAO;
 import com.ensta.myfilmlist.model.Film;
-import com.ensta.myfilmlist.model.Realisateur;
 import com.ensta.myfilmlist.persistence.ConnectionManager;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.stereotype.Repository;
 
 
-// import static org.junit.jupiter.api.Assertions.*;
-
+@Repository
 public class JdbcFilmDAO implements FilmDAO {
 
     private final JdbcTemplate jdbcTemplate = new JdbcTemplate(ConnectionManager.getDataSource());
 
-    private static class FilmRowMapper implements RowMapper<Film> {
+    @Autowired
+    private RealisateurDAO realisateurDAO;
+
+    private class FilmRowMapper implements RowMapper<Film> {
+
         @Override
         public Film mapRow(ResultSet rs, int rowNum) throws SQLException {
 
@@ -29,14 +34,21 @@ public class JdbcFilmDAO implements FilmDAO {
             film.setDuree(rs.getInt("duree"));
             film.setId(rs.getInt("film.id"));
 
-            Realisateur realisateur = new Realisateur();
-            realisateur.setId(rs.getInt("realisateur_id"));
-            realisateur.setNom(rs.getString("nom"));
-            realisateur.setPrenom(rs.getString("prenom"));
-            realisateur.setCelebre(rs.getBoolean("celebre"));
-            realisateur.setDateNaissance(rs.getDate("date_naissance").toLocalDate());
+            film.setRealisateur(realisateurDAO.findById(rs.getInt("realisateur_id")).orElse(null));
 
-            film.setRealisateur(realisateur);
+            return film;
+        }
+    }
+
+    static private class FilmNoRealisateurRowMapper implements RowMapper<Film> {
+
+        @Override
+        public Film mapRow(ResultSet rs, int rowNum) throws SQLException {
+
+            Film film = new Film();
+            film.setTitre(rs.getString("titre"));
+            film.setDuree(rs.getInt("duree"));
+            film.setId(rs.getInt("film.id"));
 
             return film;
         }
@@ -51,7 +63,7 @@ public class JdbcFilmDAO implements FilmDAO {
             return jdbcTemplate.query(query, new FilmRowMapper());
         } catch (Exception e) {
             // Log and handle exception (for simplicity, print stack trace)
-            System.out.println("Error while fetching films from database.");
+            System.out.println("Error while fetching films from database.\n" + e.getMessage());
             e.printStackTrace();
 
             return new ArrayList<>();
@@ -94,7 +106,7 @@ public class JdbcFilmDAO implements FilmDAO {
                 "SELECT * FROM Film JOIN Realisateur ON Film.realisateur_id = Realisateur.id  WHERE realisateur_id = ?";
 
         try {
-            return jdbcTemplate.query(query, new JdbcFilmDAO.FilmRowMapper(), realisateurId);
+            return jdbcTemplate.query(query, new JdbcFilmDAO.FilmNoRealisateurRowMapper(), realisateurId);
         } catch (Exception e) {
             return List.of();
         }

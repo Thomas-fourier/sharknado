@@ -1,8 +1,6 @@
 package com.ensta.myfilmlist.service.impl;
 import com.ensta.myfilmlist.dao.FilmDAO;
 import com.ensta.myfilmlist.dao.RealisateurDAO;
-import com.ensta.myfilmlist.dao.impl.JdbcFilmDAO;
-import com.ensta.myfilmlist.dao.impl.JdbcRealisateurDAO;
 import com.ensta.myfilmlist.dto.FilmDTO;
 import com.ensta.myfilmlist.dto.RealisateurDTO;
 import com.ensta.myfilmlist.form.FilmForm;
@@ -12,19 +10,27 @@ import com.ensta.myfilmlist.model.Film;
 import com.ensta.myfilmlist.service.MyFilmsService;
 import com.ensta.myfilmlist.model.Realisateur;
 import com.ensta.myfilmlist.exception.ServiceException;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
 
 import java.util.Arrays;
 import java.util.List;
 import java.util.Optional;
 
+
+@Service
 public class MyFilmsServiceImpl implements MyFilmsService {
     public static final int NB_FILMS_MIN_REALISATEUR_CELEBRE = 3;
+
+    @Autowired
+    private RealisateurDAO realisateurDAO;
+    @Autowired
+    private FilmDAO filmDAO;
 
     @Override
     public Realisateur updateRealisateurCelebre(Realisateur Real) throws ServiceException {
         try {
             Real.setCelebre(Real.getFilmRealises().size() >= NB_FILMS_MIN_REALISATEUR_CELEBRE);
-            RealisateurDAO realisateurDAO = new JdbcRealisateurDAO();
             realisateurDAO.update(Real);
             return Real;
         } catch (Exception e) {
@@ -51,9 +57,7 @@ public class MyFilmsServiceImpl implements MyFilmsService {
     @Override
     public List<FilmDTO> findAllFilms() throws ServiceException {
         try {
-            FilmDAO bdd_access = new JdbcFilmDAO();
-
-            return FilmMapper.convertFilmToFilmDTOs(bdd_access.findAll());
+            return FilmMapper.convertFilmToFilmDTOs(filmDAO.findAll());
         } catch (Exception e) {
             throw new ServiceException("Error while finding films", e);
         }
@@ -64,14 +68,13 @@ public class MyFilmsServiceImpl implements MyFilmsService {
         // Convert form to film
         Film film = FilmMapper.convertFilmFormToFilm(filmForm);
 
-        RealisateurDAO realisateurDAO = new JdbcRealisateurDAO();
         Optional<Realisateur> re = realisateurDAO.findById(filmForm.getRealisateurId());
 
         if (re.isPresent()) {
             film.setRealisateur(re.get());
-            FilmDAO filmDAO = new JdbcFilmDAO();
+            re.get().addFilmRealises(film);
             Film ret = filmDAO.save(film);
-            ret.setRealisateur(updateRealisateurCelebre(film.getRealisateur()));
+            ret.setRealisateur(updateRealisateurCelebre(re.get()));
             return FilmMapper.convertFilmToFilmDTO(ret);
         }
 
@@ -81,13 +84,11 @@ public class MyFilmsServiceImpl implements MyFilmsService {
 
     @Override
     public List<RealisateurDTO> findAllRealisateurs() throws ServiceException {
-        RealisateurDAO realisateurDAO = new JdbcRealisateurDAO();
         return RealisateurMapper.convertRealisateurToRealisateurDTOs(realisateurDAO.findAllRealisateur());
     }
 
     @Override
     public RealisateurDTO findRealisateurByNomAndPrenom(String nom, String prenom) throws ServiceException {
-        RealisateurDAO realisateurDAO = new JdbcRealisateurDAO();
         try {
             return RealisateurMapper.convertRealisateurToRealisateurDTO(realisateurDAO.findByNomAndPrenom(nom, prenom));
         } catch (Exception e) {
@@ -97,18 +98,17 @@ public class MyFilmsServiceImpl implements MyFilmsService {
 
     @Override
     public FilmDTO findFilmById(long id) throws ServiceException {
-        FilmDAO filmDAO = new JdbcFilmDAO();
         Optional<Film> film = filmDAO.findById(id);
         return film.map(FilmMapper::convertFilmToFilmDTO).orElse(null);
     }
 
     @Override
     public void deleteFilm(long id) throws ServiceException {
-        FilmDAO filmDAO = new JdbcFilmDAO();
         Optional<Film> film = filmDAO.findById(id);
 
         if (film.isPresent()) {
             filmDAO.delete(film.get());
+            film.get().getRealisateur().removeFilmRealises(film.get());
             updateRealisateurCelebre(film.get().getRealisateur());
         }
     }

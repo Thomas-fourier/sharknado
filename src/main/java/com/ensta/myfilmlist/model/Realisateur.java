@@ -1,9 +1,7 @@
 package com.ensta.myfilmlist.model;
 
-import com.ensta.myfilmlist.dao.FilmDAO;
-import com.ensta.myfilmlist.dao.impl.JdbcFilmDAO;
-
 import java.time.LocalDate;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -14,7 +12,7 @@ public class Realisateur {
     private String nom;
     private String prenom;
     private LocalDate dateNaissance;
-    private List<Film> filmRealises;
+    private List<Film> filmRealises = new ArrayList<>();
     private boolean celebre;
 
     public long getId() {
@@ -23,7 +21,6 @@ public class Realisateur {
 
     public void setId(long _id) {
         id = _id;
-        return;
     }
 
     public String getNom() {
@@ -32,7 +29,6 @@ public class Realisateur {
 
     public void setNom(String _nom) {
         nom = _nom;
-        return;
     }
 
     public String getPrenom() {
@@ -41,7 +37,6 @@ public class Realisateur {
 
     public void setPrenom(String _prenom) {
         prenom = _prenom;
-        return;
     }
 
     public LocalDate getDateNaissance() {
@@ -50,13 +45,9 @@ public class Realisateur {
 
     public void setDateNaissance(LocalDate _dateNaissance) {
         dateNaissance = _dateNaissance;
-        return;
     }
 
     public List<Film> getFilmRealises() {
-        FilmDAO filmDAO = new JdbcFilmDAO();
-        filmRealises = filmDAO.findByRealisateurId(id);
-
         return filmRealises;
     }
 
@@ -65,7 +56,6 @@ public class Realisateur {
         if (celebre || filmRealises.size() >= filmRealisesCelebrite) {
             celebre = true;
         }
-        return;
     }
 
     public void removeFilmRealises(Film film) {
@@ -73,13 +63,11 @@ public class Realisateur {
         if (!celebre || filmRealises.size() < filmRealisesCelebrite) {
             celebre = false;
         }
-        return;
     }
 
     public void setFilmRealises(List<Film> _filmRealises) {
         filmRealises = _filmRealises;
         celebre = (filmRealises.size() >= filmRealisesCelebrite);
-        return;
     }
 
     public boolean getCelebre() {
@@ -88,6 +76,5 @@ public class Realisateur {
 
     public void setCelebre(boolean _celebre) {
         celebre = _celebre;
-        return;
     }
 }
