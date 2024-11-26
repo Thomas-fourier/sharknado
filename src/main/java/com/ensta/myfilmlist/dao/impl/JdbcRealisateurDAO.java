@@ -21,7 +21,8 @@ import java.util.stream.Collectors;
 @Repository
 public class JdbcRealisateurDAO implements RealisateurDAO {
 
-    private final JdbcTemplate jdbcTemplate = new JdbcTemplate(ConnectionManager.getDataSource());
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     @Autowired
     private FilmDAO filmDAO;

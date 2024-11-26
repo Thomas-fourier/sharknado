@@ -19,7 +19,8 @@ import org.springframework.stereotype.Repository;
 @Repository
 public class JdbcFilmDAO implements FilmDAO {
 
-    private final JdbcTemplate jdbcTemplate = new JdbcTemplate(ConnectionManager.getDataSource());
+    @Autowired
+    private JdbcTemplate jdbcTemplate;
 
     @Autowired
     private RealisateurDAO realisateurDAO;
