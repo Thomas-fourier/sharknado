@@ -7,9 +7,8 @@ import java.util.List;
 import java.util.Optional;
 
 import com.ensta.myfilmlist.dao.FilmDAO;
-import com.ensta.myfilmlist.dao.RealisateurDAO;
 import com.ensta.myfilmlist.model.Film;
-import com.ensta.myfilmlist.persistence.ConnectionManager;
+import com.ensta.myfilmlist.model.Realisateur;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
@@ -22,10 +21,7 @@ public class JdbcFilmDAO implements FilmDAO {
     @Autowired
     private JdbcTemplate jdbcTemplate;
 
-    @Autowired
-    private RealisateurDAO realisateurDAO;
-
-    private class FilmRowMapper implements RowMapper<Film> {
+    private static class FilmRowMapper implements RowMapper<Film> {
 
         @Override
         public Film mapRow(ResultSet rs, int rowNum) throws SQLException {
@@ -35,7 +31,13 @@ public class JdbcFilmDAO implements FilmDAO {
             film.setDuree(rs.getInt("duree"));
             film.setId(rs.getInt("film.id"));
 
-            film.setRealisateur(realisateurDAO.findById(rs.getInt("realisateur_id")).orElse(null));
+            Realisateur re = new Realisateur();
+            re.setNom(rs.getString("nom"));
+            re.setPrenom(rs.getString("prenom"));
+            re.setCelebre(rs.getBoolean("celebre"));
+            re.setDateNaissance(rs.getDate("date_naissance").toLocalDate());
+            re.setId(rs.getInt("realisateur.id"));
+            film.setRealisateur(re);
 
             return film;
         }
