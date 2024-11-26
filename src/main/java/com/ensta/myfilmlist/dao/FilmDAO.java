@@ -19,9 +19,23 @@ public interface FilmDAO {
      */
     Film save(Film film);
 
+    /**
+     * Search a film by its identifier.
+     * @param id the identifier
+     * @return an optional Film
+     */
     Optional<Film> findById(long id);
 
+    /**
+     * Delete a film.
+     * @param film the film to delete
+     */
     void delete(Film film);
 
+    /**
+     * Find all the movies made by a moviemaker.
+     * @param realisateurId identifier of the realisateur
+     * @return a list of films made by the realisateur
+     */
     List<Film> findByRealisateurId(long realisateurId);
 }

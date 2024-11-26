@@ -40,13 +40,42 @@ public interface MyFilmsService {
      */
     public List<FilmDTO> findAllFilms() throws ServiceException;
 
+    /**
+     * Create a film from a film form
+     * @param filmForm the form from which to create a film
+     * @return the filmDTO created
+     * @throws ServiceException if a connection error occurs or the realisateur does not exist
+     */
     public FilmDTO createFilm(FilmForm filmForm) throws ServiceException;
 
+    /**
+     * Return all the realisateurs.
+     * @return list of realisateurs
+     * @throws ServiceException if a connection error occurs
+     */
     List<RealisateurDTO> findAllRealisateurs() throws ServiceException;
 
+    /**
+     * Find a realisateur by its name and surname
+     * @param nom relisateur's name
+     * @param prenom realisateur's surname
+     * @return the realisateur
+     * @throws ServiceException if a connection error occurs
+     */
     RealisateurDTO findRealisateurByNomAndPrenom(String nom, String prenom) throws ServiceException;
 
+    /**
+     * Find a film by its identifier
+     * @param id identifier of the film
+     * @return the film DTO
+     * @throws ServiceException if a connection error occurs
+     */
     FilmDTO findFilmById(long id) throws ServiceException;
 
+    /**
+     * Delete a film
+     * @param id identifier of the film to delete
+     * @throws ServiceException if a connection error occurs
+     */
     void deleteFilm(long id) throws ServiceException;
 }

@@ -7,6 +7,12 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 public class RealisateurMapper {
+
+    /**
+     * Converts a list of realisateurs into realisateur DTO
+     * @param realisateur a list of realisateur
+     * @return the corresponding list of realisateur DTO
+     */
     public static List<RealisateurDTO> convertRealisateurToRealisateurDTOs(List<Realisateur> realisateur) {
         return realisateur.stream()
                 .map(RealisateurMapper::convertRealisateurToRealisateurDTO)
@@ -14,6 +20,11 @@ public class RealisateurMapper {
 
     }
 
+    /**
+     * Converts a list of realisateurs DTO into realisateur
+     * @param realisateur a list of realisateur DTO
+     * @return the corresponding list of realisateur
+     */
     public static List<Realisateur> convertRealisateurDTOToRealisateurs(List<RealisateurDTO> realisateur) {
         return realisateur.stream()
                 .map(RealisateurMapper::convertRealisateurDTOToRealisateur)
@@ -21,6 +32,11 @@ public class RealisateurMapper {
 
     }
 
+    /**
+     * Converts a realisateur into a realisateur DTO
+     * @param realisateur realisateur to convert
+     * @return corresponding realisateur DTO
+     */
     public static RealisateurDTO convertRealisateurToRealisateurDTO(Realisateur realisateur) {
         RealisateurDTO realisateurDTO = new RealisateurDTO();
         realisateurDTO.setId(realisateur.getId());
@@ -31,6 +47,11 @@ public class RealisateurMapper {
         return realisateurDTO;
     }
 
+    /**
+     * Converts a realisateur DTO into a realisateur
+     * @param realisateurDTO realisateur DTO to convert
+     * @return corresponding realisateur
+     */
     public static Realisateur convertRealisateurDTOToRealisateur(RealisateurDTO realisateurDTO) {
         Realisateur realisateur = new Realisateur();
         realisateur.setId(realisateurDTO.getId());
