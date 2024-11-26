@@ -39,13 +39,7 @@ public class JdbcRealisateurDAO implements RealisateurDAO {
             re.setDateNaissance(rs.getDate("date_naissance").toLocalDate());
             re.setId(rs.getInt("id"));
 
-            re.setFilmRealises(
-                    filmDAO.findByRealisateurId(
-                            re.getId())
-                                .stream()
-                                .peek(film -> film.setRealisateur(re))
-                                .collect(Collectors.toList())
-            );
+            re.setFilmRealises(filmDAO.findByRealisateurId(re.getId()));
 
 
             return re;
