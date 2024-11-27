@@ -3,7 +3,6 @@ package com.ensta.myfilmlist.dao.impl;
 import com.ensta.myfilmlist.dao.FilmDAO;
 import com.ensta.myfilmlist.dao.RealisateurDAO;
 import com.ensta.myfilmlist.model.Realisateur;
-import com.ensta.myfilmlist.persistence.ConnectionManager;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
@@ -16,7 +15,6 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
-import java.util.stream.Collectors;
 
 @Repository
 public class JdbcRealisateurDAO implements RealisateurDAO {
