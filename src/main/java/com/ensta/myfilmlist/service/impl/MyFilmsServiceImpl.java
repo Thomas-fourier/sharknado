@@ -99,7 +99,11 @@ public class MyFilmsServiceImpl implements MyFilmsService {
     @Override
     public FilmDTO findFilmById(long id) throws ServiceException {
         Optional<Film> film = filmDAO.findById(id);
-        return film.map(FilmMapper::convertFilmToFilmDTO).orElse(null);
+        try {
+            return film.map(FilmMapper::convertFilmToFilmDTO).get();
+        } catch (Exception e) {
+            throw new ServiceException("No film of that ID found.");
+        }
     }
 
     @Override
@@ -110,7 +114,10 @@ public class MyFilmsServiceImpl implements MyFilmsService {
             filmDAO.delete(film.get());
             film.get().getRealisateur().removeFilmRealises(film.get());
             updateRealisateurCelebre(film.get().getRealisateur());
+            return;
         }
+
+        throw new ServiceException("Film to delete was not found");
     }
 
 

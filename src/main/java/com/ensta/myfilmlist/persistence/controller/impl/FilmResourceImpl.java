@@ -60,9 +60,7 @@ public class FilmResourceImpl implements FilmRessource {
         try {
             return new ResponseEntity<>(myFilmsService.findFilmById(id), HttpStatus.OK);
         } catch (Exception e) {
-            // This does not return 404 for some reason.
-            System.out.println(e.getMessage());
-            throw new ControllerException();
+            throw new ControllerException(e.getMessage());
         }
     }
 
@@ -71,13 +69,13 @@ public class FilmResourceImpl implements FilmRessource {
     @ApiOperation(value = "Ajouter un film à la librairie", notes = "Ajoute les détails d'un film et renvoit le filmDTO créé",
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<FilmDTO> createFilm(
-                @Parameter(name="filmForm", description = "informations sur le film à créer") @RequestBody FilmForm filmForm
+                @Parameter(name="filmForm", description = "informations sur le film à créer") FilmForm filmForm
             ) throws ControllerException {
         try {
             FilmDTO filmDTO = myFilmsService.createFilm(filmForm);
             return new ResponseEntity<>(filmDTO, HttpStatus.OK);
-        } catch (ServiceException e) {
-            throw new ControllerException();
+        } catch (Exception e) {
+            throw new ControllerException(e.getMessage());
         }
     }
 
@@ -92,7 +90,7 @@ public class FilmResourceImpl implements FilmRessource {
             myFilmsService.deleteFilm(filmId);
             return new ResponseEntity<>(true, HttpStatus.OK);
         } catch (Exception e) {
-            return new ResponseEntity<>(false, HttpStatus.OK);
+            throw new ControllerException(e.getMessage());
         }
     }
 
