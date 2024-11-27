@@ -12,6 +12,7 @@ import com.ensta.myfilmlist.model.Realisateur;
 import com.ensta.myfilmlist.exception.ServiceException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.util.Arrays;
 import java.util.List;
@@ -64,6 +65,7 @@ public class MyFilmsServiceImpl implements MyFilmsService {
     }
 
     @Override
+    @Transactional
     public FilmDTO createFilm(FilmForm filmForm) throws ServiceException {
         // Convert form to film
         Film film = FilmMapper.convertFilmFormToFilm(filmForm);
@@ -107,6 +109,7 @@ public class MyFilmsServiceImpl implements MyFilmsService {
     }
 
     @Override
+    @Transactional
     public void deleteFilm(long id) throws ServiceException {
         Optional<Film> film = filmDAO.findById(id);
 
