@@ -10,11 +10,13 @@ import org.springframework.http.ResponseEntity;
 
 import java.util.List;
 
+import javax.validation.Valid;
+
 @Api(tags = "Film")
 @Tag(name = "Film", description = "Opération sur les films")
 public interface FilmRessource {
     ResponseEntity<List<FilmDTO>> getAllFilms() throws ControllerException;
     ResponseEntity<FilmDTO> getFilmById(long id) throws ControllerException;
-    ResponseEntity<FilmDTO> createFilm(FilmForm filmForm) throws ControllerException;
+    ResponseEntity<FilmDTO> createFilm(@Valid FilmForm filmForm) throws ControllerException;
     ResponseEntity<Boolean> deleteFilm(long filmId) throws ControllerException;
 }
