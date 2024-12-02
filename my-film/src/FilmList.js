@@ -1,8 +1,9 @@
-
+import mockFilms from "./mock/FilmMock";
+import FilmCard from "./FilmCard";
 
 export default function FilmList() {
-    const films= ["film1", "film2", "film3"];
+    const films= mockFilms;
     return films.map((film)=> {
-    return <h1>{film}</h1>
+    return <FilmCard key={film.id} film={film} />
     })
     }

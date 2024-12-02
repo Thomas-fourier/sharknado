@@ -1,6 +1,6 @@
 import Typography from '@mui/material/Typography';
 import { Card } from '@mui/material';
-import CardContent from '@mui/material';
+import CardContent from '@mui/material/CardContent';
 
 export default function FilmCard(props) {
     return <Card variant="outlined">
