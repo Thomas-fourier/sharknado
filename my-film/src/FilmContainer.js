@@ -30,7 +30,7 @@ export default function FilmContainer() {
     return (
         <>
             <FilmList films={films} />
-            <CreateFilmForm onSubmit={handleCreateFilm} />
+            <CreateFilmForm saveFilm={handleCreateFilm} />
         </>
     );
 }

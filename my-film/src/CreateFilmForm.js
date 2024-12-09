@@ -2,7 +2,7 @@ import { TextField, Select, MenuItem, Button } from '@mui/material';
 import { useState, useEffect } from 'react';
 import { getAllRealisateurs } from './api/RealisateurApi'; // Import de la méthode
 
-export default function CreateFilmForm({ onSubmit }) {
+export default function CreateFilmForm({ saveFilm }) {
     const [titre, setTitre] = useState('');
     const [duree, setDuree] = useState('');
     const [selectedRealisateur, setSelectedRealisateur] = useState('');
@@ -24,7 +24,7 @@ export default function CreateFilmForm({ onSubmit }) {
         }
 
         // Appeler la fonction onSubmit passée en prop
-        onSubmit({ titre, duree, realisateurId: selectedRealisateur });
+        saveFilm({ titre, duree, realisateurId: selectedRealisateur });
 
         // Réinitialiser les champs après la soumission
         setTitre('');
