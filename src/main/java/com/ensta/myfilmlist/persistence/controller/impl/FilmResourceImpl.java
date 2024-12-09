@@ -11,7 +11,7 @@ import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.Parameter;
-import io.swagger.v3.oas.annotations.parameters.RequestBody;
+import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -73,7 +73,7 @@ public class FilmResourceImpl implements FilmRessource {
     @ApiOperation(value = "Ajouter un film à la librairie", notes = "Ajoute les détails d'un film et renvoit le filmDTO créé",
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<FilmDTO> createFilm(
-                @RequestBody (description = "informations sur le film à créer") FilmForm filmForm
+                @RequestBody FilmForm filmForm
             ) throws ControllerException {
         try {
             FilmDTO filmDTO = myFilmsService.createFilm(filmForm);
