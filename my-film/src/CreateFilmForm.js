@@ -1,9 +1,8 @@
 import { TextField, Select, MenuItem, Button } from '@mui/material';
 import { useState, useEffect } from 'react';
 import { getAllRealisateurs } from './api/RealisateurApi'; // Import de la méthode
-import { postFilm } from './api/FilmApi'; // Import de la méthode
 
-export default function CreateFilmForm() {
+export default function CreateFilmForm({ onSubmit }) {
     const [titre, setTitre] = useState('');
     const [duree, setDuree] = useState('');
     const [selectedRealisateur, setSelectedRealisateur] = useState('');
@@ -24,20 +23,15 @@ export default function CreateFilmForm() {
             return;
         }
 
-        // Création du film en appelant la méthode postFilm
-        postFilm({ titre: titre, duree: duree, realisateurId: selectedRealisateur })
-            .then((response) => {
-                alert("Film ajouté avec succès !");
-                // Réinitialiser les champs après la soumission
-                setTitre('');
-                setDuree('');
-                setSelectedRealisateur('');
-            })
-            .catch((error) => {
-                alert("Erreur lors de l'ajout du film: " + error.message);
-            });
+        // Appeler la fonction onSubmit passée en prop
+        onSubmit({ titre, duree, realisateurId: selectedRealisateur });
+
+        // Réinitialiser les champs après la soumission
+        setTitre('');
+        setDuree('');
+        setSelectedRealisateur('');
     }
-    console.log(realisateurs);
+
     return (
         <form onSubmit={handleCreateFilm}>
             <TextField
