@@ -1,15 +1,14 @@
 import './App.css';
 import Header from './Header';
-import FilmList from './FilmList.js';
-
+import FilmContainer from './FilmContainer';
 
 function App() {
-  return <>
-    <Header/>
-    <FilmList/>
-    </>;
+  return (
+      <>
+        <Header />
+        <FilmContainer />
+      </>
+  );
 }
 
 export default App;
-
-
