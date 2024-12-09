@@ -23,5 +23,5 @@ export function postFilm(film) {
  * @param {string} filmId - L'ID du film à supprimer
  */
 export function deleteFilm(filmId) {
-    return axios.delete(`${POST_URI}+"deleteFilm/"+${filmId}`);
+    return axios.delete(POST_URI+"deleteFilm/"+filmId);
 }
