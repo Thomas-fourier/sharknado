@@ -1,6 +1,7 @@
 package com.ensta.myfilmlist.persistence.controller;
 
 import com.ensta.myfilmlist.dto.FilmDTO;
+import com.ensta.myfilmlist.dto.RealisateurDTO;
 import com.ensta.myfilmlist.exception.ControllerException;
 import com.ensta.myfilmlist.form.FilmForm;
 
@@ -19,4 +20,5 @@ public interface FilmRessource {
     ResponseEntity<FilmDTO> getFilmById(long id) throws ControllerException;
     ResponseEntity<FilmDTO> createFilm(@Valid FilmForm filmForm) throws ControllerException;
     ResponseEntity<Boolean> deleteFilm(long filmId) throws ControllerException;
+    ResponseEntity<List<RealisateurDTO>> getAllRealisateurs() throws ControllerException;
 }

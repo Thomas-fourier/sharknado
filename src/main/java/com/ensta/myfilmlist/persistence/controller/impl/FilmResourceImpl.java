@@ -1,6 +1,7 @@
 package com.ensta.myfilmlist.persistence.controller.impl;
 
 import com.ensta.myfilmlist.dto.FilmDTO;
+import com.ensta.myfilmlist.dto.RealisateurDTO;
 import com.ensta.myfilmlist.exception.ControllerException;
 import com.ensta.myfilmlist.exception.ServiceException;
 import com.ensta.myfilmlist.form.FilmForm;
@@ -11,7 +12,6 @@ import io.swagger.annotations.ApiResponse;
 import io.swagger.annotations.ApiResponses;
 import io.swagger.v3.oas.annotations.Parameter;
 import io.swagger.v3.oas.annotations.parameters.RequestBody;
-
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -50,6 +50,7 @@ public class FilmResourceImpl implements FilmRessource {
 
     @Override
     @GetMapping("/film/{id}")
+    @CrossOrigin(origins = "http://localhost:3000")
     @ApiOperation(value = "Obtenir des infos sur un film", notes = "Renvoit les détails des informations d'un film donné.",
             produces = MediaType.APPLICATION_JSON_VALUE)
     @ApiResponses(value = {
@@ -68,10 +69,11 @@ public class FilmResourceImpl implements FilmRessource {
 
     @Override
     @PostMapping("/createFilm")
+    @CrossOrigin(origins = "http://localhost:3000")
     @ApiOperation(value = "Ajouter un film à la librairie", notes = "Ajoute les détails d'un film et renvoit le filmDTO créé",
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<FilmDTO> createFilm(
-                @Parameter(name="filmForm", description = "informations sur le film à créer") FilmForm filmForm
+                @RequestBody (description = "informations sur le film à créer") FilmForm filmForm
             ) throws ControllerException {
         try {
             FilmDTO filmDTO = myFilmsService.createFilm(filmForm);
@@ -83,6 +85,7 @@ public class FilmResourceImpl implements FilmRessource {
 
     @Override
     @PostMapping("/deleteFilm/{filmId}")
+    @CrossOrigin(origins = "http://localhost:3000")
     @ApiOperation(value = "Supprimer un film de la librairie", notes = "Supprime le film par son identifiant",
             produces = MediaType.APPLICATION_JSON_VALUE)
     public ResponseEntity<Boolean> deleteFilm(
@@ -97,4 +100,20 @@ public class FilmResourceImpl implements FilmRessource {
     }
 
     
+    @Override
+    @GetMapping("/realisateur")
+    @CrossOrigin(origins = "http://localhost:3000")
+    @ApiOperation(value = "Lister les realisateurs", notes = "Permet de renvoyer la liste de tous les réalisateurs.",
+                produces = MediaType.APPLICATION_JSON_VALUE)
+    @ApiResponses(value = {
+            @ApiResponse(code = 200, message = "La liste des réalisateur a été renvoyée correctement")
+    })
+    public ResponseEntity<List<RealisateurDTO>> getAllRealisateurs() throws ControllerException {
+        try {
+            return new ResponseEntity<>(myFilmsService.findAllRealisateurs(), HttpStatus.OK);
+        } catch (ServiceException e) {
+            System.err.println(e);
+            throw new ControllerException(e.getMessage());
+        }
+    }
 }
