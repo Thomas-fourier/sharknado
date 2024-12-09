@@ -18,6 +18,7 @@ import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
 import org.springframework.validation.annotation.Validated;
 import org.springframework.web.bind.annotation.CrossOrigin;
+import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
@@ -84,7 +85,7 @@ public class FilmResourceImpl implements FilmRessource {
     }
 
     @Override
-    @PostMapping("/deleteFilm/{filmId}")
+    @DeleteMapping("/deleteFilm/{filmId}")
     @CrossOrigin(origins = "http://localhost:3000")
     @ApiOperation(value = "Supprimer un film de la librairie", notes = "Supprime le film par son identifiant",
             produces = MediaType.APPLICATION_JSON_VALUE)
