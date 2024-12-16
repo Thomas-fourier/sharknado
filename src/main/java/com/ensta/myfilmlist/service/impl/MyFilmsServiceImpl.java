@@ -123,5 +123,12 @@ public class MyFilmsServiceImpl implements MyFilmsService {
         throw new ServiceException("Film to delete was not found");
     }
 
+    public void setRealisateurDAO(RealisateurDAO realisateurDAO) {
+        this.realisateurDAO = realisateurDAO;
+    }
+
+    public void setFilmDAO(FilmDAO filmDAO) {
+        this.filmDAO = filmDAO;
+    }
 
 }

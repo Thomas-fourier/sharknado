@@ -119,25 +119,3 @@ public class JdbcFilmDAO implements FilmDAO {
 
 
 
-
-// class JdbcFilmDAOTest {
-
-//     // private  jdbcFilmDAO;
-
-//     // @BeforeEach
-
-//         // Crée une instance du DAO
-//     private JdbcFilmDAO jdbcFilmDAO = new JdbcFilmDAO();
-
-//     @Test
-//     void testFindAll() {
-//         // Appelle la méthode findAll()
-//         List<Film> films = jdbcFilmDAO.findAll();
-
-//         // assertEquals(2, films.get(0).getTitre());
-//         films.get(0).getTitre();
-//         System.out.println(films.get(0).getTitre());
-//         System.out.println(films.get(-1).getTitre());
-
-//     }
-// }
