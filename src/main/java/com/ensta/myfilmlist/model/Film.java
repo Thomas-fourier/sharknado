@@ -1,49 +1,57 @@
 package com.ensta.myfilmlist.model;
 
+import javax.persistence.*;
+
 /**
  * Represente un Film.
  */
+@Entity
+@Table(name = "Film")
 public class Film {
 
-	private long id;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    private long id;
 
-	private String titre;
+    @Column(name = "titre", nullable = false)
+    private String titre;
 
-	private int duree;
+    @Column(name = "duree")
+    private int duree;
 
-	private Realisateur realisateur;
+    @ManyToOne
+    @JoinColumn(name = "realisateur_id", nullable = false)
+    private Realisateur realisateur;
 
-	public long getId() {
-		return id;
-	}
+    public long getId() {
+        return id;
+    }
 
-	public void setId(long id) {
-		this.id = id;
-	}
+    public void setId(long id) {
+        this.id = id;
+    }
 
-	public String getTitre() {
-		return titre;
-	}
+    public String getTitre() {
+        return titre;
+    }
 
-	public void setTitre(String titre) {
-		this.titre = titre;
-	}
+    public void setTitre(String titre) {
+        this.titre = titre;
+    }
 
-	public int getDuree() {
-		return duree;
-	}
+    public int getDuree() {
+        return duree;
+    }
 
-	public void setDuree(int duree) {
-		this.duree = duree;
-	}
+    public void setDuree(int duree) {
+        this.duree = duree;
+    }
 
-	public Realisateur getRealisateur() {
-		return realisateur;
-	}
+    public Realisateur getRealisateur() {
+        return realisateur;
+    }
 
-	public void setRealisateur(Realisateur _realisateur) {
-		realisateur = _realisateur;
-		return;
-	}
-
+    public void setRealisateur(Realisateur realisateur) {
+        this.realisateur = realisateur;
+    }
 }
