@@ -75,14 +75,29 @@ public class MyFilmsDAOTests {
         assertEquals("E.T.", savedFilm.getTitre(), "Le titre du film sauvegardé doit être 'E.T.'");
     }
 
-    // Tests pour JdbcRealisateurDAO
+    // Tests pour JdbcRealisateurDAO reussi
     @Test
-    void testFindAllRealisateurs_Rapide() {
+    void testFindAllRealisateurs_reussi() {
         List<Realisateur> realisateurs = realisateurDAO.findAllRealisateur();
         assertNotNull(realisateurs, "La liste des réalisateurs ne doit pas être null");
         assertEquals(1, realisateurs.size(), "Il doit y avoir exactement 1 réalisateur dans la base");
         assertEquals("Spielberg", realisateurs.get(0).getNom(), "Le nom du réalisateur doit être 'Spielberg'");
     }
+
+
+    ///////////////////////////////////////////////////////////////////////////////// A REFAIRE 
+    // @Test
+    // void testFindAllRealisateur_Exception() {
+    //     // Simuler une erreur en modifiant la requête
+    //     jdbcTemplate.execute("DROP TABLE Realisateur");
+
+    //     // Act
+    //     List<Realisateur> realisateurs = realisateurDAO.findAllRealisateur();
+
+    //     // Assert
+    //     assertNotNull(realisateurs, "La liste des réalisateurs ne doit pas être nulle.");
+    //     assertTrue(realisateurs.isEmpty(), "La liste des réalisateurs doit être vide si une erreur survient.");
+    // }
 
     @Test
     void testFindRealisateurById_Rapide() {
@@ -110,4 +125,28 @@ public class MyFilmsDAOTests {
         Realisateur updatedRealisateur = realisateurDAO.findById(1).get();
         assertEquals("Spielberg Jr.", updatedRealisateur.getNom(), "Le nom du réalisateur doit être mis à jour");
     }
+
+    // @Test
+    // void testUpdate_Exception() {
+    //     // Simuler une erreur en supprimant la table avant l'update
+    //     jdbcTemplate.execute("DROP TABLE Realisateur");
+
+    //     // Arrange
+    //     Realisateur realisateur = new Realisateur();
+    //     realisateur.setId(1);
+    //     realisateur.setNom("Spielberg");
+    //     realisateur.setPrenom("Steven");
+    //     realisateur.setCelebre(true);
+
+    //     // Act & Assert
+    //     Exception exception = assertThrows(Exception.class, () -> {
+    //         realisateurDAO.update(realisateur);
+    //     });
+
+    //     // System.out.print("/////////////////////////////////////////////////////////////////////////////////" + realisateurDAO.update(realisateur) );
+    //     System.out.print("///////////////////////////////////////////////////" + exception.getMessage());
+    //     System.out.print("////////////////////////////////////////////////////" + exception.getMessage().contains("Error retrieving realisateurs"));
+
+    //     assertTrue(exception.getMessage().contains("Error retrieving realisateurs"), "L'exception devrait être liée à l'absence de la table.");
+    // }
 }
