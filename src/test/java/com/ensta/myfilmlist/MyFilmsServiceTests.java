@@ -1,4 +1,4 @@
-package com.ensta.myfilmlist.service;
+package com.ensta.myfilmlist;
 
 import com.ensta.myfilmlist.dao.FilmDAO;
 import com.ensta.myfilmlist.dao.RealisateurDAO;
@@ -34,7 +34,6 @@ import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
-
 @SpringBootTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)
 @Transactional
@@ -66,7 +65,7 @@ class MyFilmsServiceTests {
         films.add(new Film());
         realisateur.setFilmRealises(films);
 
-        when(realisateurDAO.update(realisateur)).thenReturn(realisateur); 
+        when(realisateurDAO.update(realisateur)).thenReturn(realisateur);
 
         Realisateur updatedRealisateur = myFilmsService.updateRealisateurCelebre(realisateur);
 
@@ -86,7 +85,7 @@ class MyFilmsServiceTests {
         films.add(new Film());
         realisateur.setFilmRealises(films);
 
-        when(realisateurDAO.update(realisateur)).thenReturn(realisateur); 
+        when(realisateurDAO.update(realisateur)).thenReturn(realisateur);
         Realisateur updatedRealisateur = myFilmsService.updateRealisateurCelebre(realisateur);
 
         assertNotNull(updatedRealisateur);
@@ -113,18 +112,18 @@ class MyFilmsServiceTests {
     @Test
     void testCalculerDureeTotale_NormalCase() {
         Film film_1 = new Film();
-		film_1.setTitre("Les deux tours");
-		film_1.setDuree(120);
+        film_1.setTitre("Les deux tours");
+        film_1.setDuree(120);
 
         Film film_2 = new Film();
-		film_2.setTitre("La vivi mobile");
-		film_2.setDuree(180);
+        film_2.setTitre("La vivi mobile");
+        film_2.setDuree(180);
 
         Film film_3 = new Film();
         film_3.setTitre("Les autres");
         film_3.setDuree(60);
 
-        List<Film> films = List.of(film_1,film_2,film_3);
+        List<Film> films = List.of(film_1, film_2, film_3);
 
         int totalDuree = myFilmsService.calculerDureeTotale(films);
 
@@ -142,7 +141,7 @@ class MyFilmsServiceTests {
 
     @Test
     void testCalculerNoteMoyenne_NormalCase() {
-        double[] notes = {4.5, 3.0, 5.0, 4.0};
+        double[] notes = { 4.5, 3.0, 5.0, 4.0 };
 
         double moyenne = myFilmsService.calculerNoteMoyenne(notes);
 
@@ -160,7 +159,7 @@ class MyFilmsServiceTests {
 
     @Test
     void testCalculerNoteMoyenne_OneNote() {
-        double[] notes = {3.5};
+        double[] notes = { 3.5 };
 
         double moyenne = myFilmsService.calculerNoteMoyenne(notes);
 
@@ -170,18 +169,18 @@ class MyFilmsServiceTests {
     @Test
     void testFindAllFilms_Success() throws ServiceException {
         Film film_1 = new Film();
-		film_1.setTitre("Les deux tours");
-		film_1.setDuree(120);
+        film_1.setTitre("Les deux tours");
+        film_1.setDuree(120);
 
         Film film_2 = new Film();
-		film_2.setTitre("La vivi mobile");
-		film_2.setDuree(180);
+        film_2.setTitre("La vivi mobile");
+        film_2.setDuree(180);
 
         Film film_3 = new Film();
         film_3.setTitre("Les autres");
         film_3.setDuree(60);
 
-        List<Film> films = List.of(film_1,film_2,film_3);
+        List<Film> films = List.of(film_1, film_2, film_3);
 
         when(filmDAO.findAll()).thenReturn(films);
         List<FilmDTO> expectedDTOs = FilmMapper.convertFilmToFilmDTOs(films);
@@ -191,12 +190,12 @@ class MyFilmsServiceTests {
         assertNotNull(actualDTOs, "La liste retournée ne doit pas être nulle.");
         assertEquals(expectedDTOs.size(), actualDTOs.size(), "La taille des listes doit correspondre.");
         assertEquals(expectedDTOs.get(0).getTitre(), actualDTOs.get(0).getTitre(), "Les titres doivent correspondre.");
-        verify(filmDAO, times(1)).findAll(); 
+        verify(filmDAO, times(1)).findAll();
     }
 
     @Test
     void testFindAllFilms_EmptyList() throws ServiceException {
-        when(filmDAO.findAll()).thenReturn(new ArrayList<>()); 
+        when(filmDAO.findAll()).thenReturn(new ArrayList<>());
 
         List<FilmDTO> actualDTOs = myFilmsService.findAllFilms();
 
@@ -207,7 +206,7 @@ class MyFilmsServiceTests {
 
     @Test
     void testFindAllFilms_ThrowsServiceException() {
-        when(filmDAO.findAll()).thenThrow(new RuntimeException("Database error")); 
+        when(filmDAO.findAll()).thenThrow(new RuntimeException("Database error"));
 
         ServiceException exception = assertThrows(ServiceException.class, () -> {
             myFilmsService.findAllFilms();
@@ -218,8 +217,6 @@ class MyFilmsServiceTests {
         assertEquals("Database error", exception.getCause().getMessage(), "Le message de la cause doit correspondre.");
         verify(filmDAO, times(1)).findAll();
     }
-
-
 
     @Test
     void testCreateFilm_Success() throws ServiceException {
@@ -270,20 +267,19 @@ class MyFilmsServiceTests {
         verify(filmDAO, never()).save(any(Film.class));
     }
 
-
     @Test
     void testFindAllRealisateurs_Success() throws ServiceException {
         Realisateur realisateur_1 = new Realisateur();
-		realisateur_1.setNom("Nolan");
-		realisateur_1.setPrenom("Chirstopher");
+        realisateur_1.setNom("Nolan");
+        realisateur_1.setPrenom("Chirstopher");
         realisateur_1.setId(1);
 
         Realisateur realisateur_2 = new Realisateur();
-		realisateur_2.setNom("Spielberg");
-		realisateur_2.setPrenom("Steven");
+        realisateur_2.setNom("Spielberg");
+        realisateur_2.setPrenom("Steven");
         realisateur_2.setId(2);
 
-        List<Realisateur> realisateurs = List.of(realisateur_1,realisateur_2);
+        List<Realisateur> realisateurs = List.of(realisateur_1, realisateur_2);
         List<RealisateurDTO> expectedDTOs = RealisateurMapper.convertRealisateurToRealisateurDTOs(realisateurs);
 
         when(realisateurDAO.findAllRealisateur()).thenReturn(realisateurs);
@@ -292,13 +288,14 @@ class MyFilmsServiceTests {
 
         assertNotNull(actualDTOs, "La liste retournée ne doit pas être nulle.");
         assertEquals(expectedDTOs.size(), actualDTOs.size(), "La taille des listes doit correspondre.");
-        assertEquals(expectedDTOs.get(0).getNom(), actualDTOs.get(0).getNom(), "Les noms des réalisateurs doivent correspondre.");
+        assertEquals(expectedDTOs.get(0).getNom(), actualDTOs.get(0).getNom(),
+                "Les noms des réalisateurs doivent correspondre.");
         verify(realisateurDAO, times(1)).findAllRealisateur();
     }
 
     @Test
     void testFindAllRealisateurs_EmptyList() throws ServiceException {
-        when(realisateurDAO.findAllRealisateur()).thenReturn(new ArrayList<>()); 
+        when(realisateurDAO.findAllRealisateur()).thenReturn(new ArrayList<>());
 
         List<RealisateurDTO> actualDTOs = myFilmsService.findAllRealisateurs();
 
@@ -311,8 +308,8 @@ class MyFilmsServiceTests {
     void testFindRealisateurByNomAndPrenom_Success() throws ServiceException {
         // Arrange
         Realisateur realisateur = new Realisateur();
-		realisateur.setNom("Nolan");
-		realisateur.setPrenom("Chirstopher");
+        realisateur.setNom("Nolan");
+        realisateur.setPrenom("Chirstopher");
         realisateur.setId(1);
 
         RealisateurDTO expectedDTO = RealisateurMapper.convertRealisateurToRealisateurDTO(realisateur);
@@ -381,14 +378,15 @@ class MyFilmsServiceTests {
 
         when(filmDAO.findById(filmId)).thenReturn(Optional.of(film));
         doNothing().when(filmDAO).delete(film);
-        when(realisateurDAO.update(realisateur)).thenReturn(realisateur); 
+        when(realisateurDAO.update(realisateur)).thenReturn(realisateur);
 
         myFilmsService.deleteFilm(filmId);
 
         verify(filmDAO, times(1)).findById(filmId);
         verify(filmDAO, times(1)).delete(film);
         verify(realisateurDAO, times(1)).update(realisateur);
-        assertFalse(realisateur.getFilmRealises().contains(film), "Le film doit être supprimé de la liste des films réalisés par le réalisateur.");
+        assertFalse(realisateur.getFilmRealises().contains(film),
+                "Le film doit être supprimé de la liste des films réalisés par le réalisateur.");
     }
 
     @Test
@@ -400,6 +398,6 @@ class MyFilmsServiceTests {
         ServiceException exception = assertThrows(ServiceException.class, () -> myFilmsService.deleteFilm(filmId));
         assertEquals("Film to delete was not found", exception.getMessage());
         verify(filmDAO, times(1)).findById(filmId);
-        verify(filmDAO, never()).delete(any(Film.class)); 
+        verify(filmDAO, never()).delete(any(Film.class));
     }
 }

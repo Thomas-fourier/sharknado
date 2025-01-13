@@ -1,3 +1,5 @@
+package com.ensta.myfilmlist;
+
 import com.ensta.myfilmlist.persistence.controller.impl.FilmResourceImpl;
 
 import com.ensta.myfilmlist.dto.FilmDTO;
@@ -59,7 +61,7 @@ import org.mockito.Mock;
 import org.mockito.MockitoAnnotations;
 
 class MyFilmsControllerTests {
-    @InjectMocks 
+    @InjectMocks
     private FilmResourceImpl filmResourceImpl;
 
     @Mock
@@ -114,7 +116,6 @@ class MyFilmsControllerTests {
         verify(myFilmsService, times(1)).findAllFilms(); // Vérifie que le service a été appelé une fois
     }
 
-
     @Test
     void testGetFilmById_Success() throws Exception {
         // Arrange
@@ -157,7 +158,7 @@ class MyFilmsControllerTests {
         verify(myFilmsService, times(1)).findFilmById(filmId); // Vérifie que le service a été appelé une fois
     }
 
-     @Test
+    @Test
     void testCreateFilm_Success() throws Exception {
         // Arrange
         FilmForm filmForm = new FilmForm();
@@ -206,7 +207,6 @@ class MyFilmsControllerTests {
         verify(myFilmsService, times(1)).createFilm(filmForm); // Vérifie que le service a été appelé une fois
     }
 
-
     @Test
     void testDeleteFilm_Success() throws Exception {
         // Arrange
@@ -244,7 +244,7 @@ class MyFilmsControllerTests {
         verify(myFilmsService, times(1)).deleteFilm(filmId); // Vérifie que le service a été appelé une fois
     }
 
-     @Test
+    @Test
     void testGetAllRealisateurs_Success() throws Exception {
         // Arrange
         RealisateurDTO real1 = new RealisateurDTO();
@@ -288,6 +288,5 @@ class MyFilmsControllerTests {
         verify(myFilmsService, times(1)).findAllRealisateurs(); // Vérifie que le service a été appelé une fois
     }
 }
-
 
 /////////////////////////////////////////// CONTROLLER EXCEPTION A TRAITER
