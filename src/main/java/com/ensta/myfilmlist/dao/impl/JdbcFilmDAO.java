@@ -10,11 +10,10 @@ import com.ensta.myfilmlist.dao.FilmDAO;
 import com.ensta.myfilmlist.model.Film;
 import com.ensta.myfilmlist.model.Realisateur;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Primary;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Repository;
-
 
 @Repository
 public class JdbcFilmDAO implements FilmDAO {
@@ -25,7 +24,7 @@ public class JdbcFilmDAO implements FilmDAO {
     private static class FilmRowMapper implements RowMapper<Film> {
 
         @Override
-        public Film mapRow(ResultSet rs, int rowNum) throws SQLException {
+        public Film mapRow(@NonNull ResultSet rs, int rowNum) throws SQLException {
 
             Film film = new Film();
             film.setTitre(rs.getString("titre"));
@@ -47,7 +46,7 @@ public class JdbcFilmDAO implements FilmDAO {
     static private class FilmNoRealisateurRowMapper implements RowMapper<Film> {
 
         @Override
-        public Film mapRow(ResultSet rs, int rowNum) throws SQLException {
+        public Film mapRow(@NonNull ResultSet rs, int rowNum) throws SQLException {
 
             Film film = new Film();
             film.setTitre(rs.getString("titre"));
@@ -61,7 +60,6 @@ public class JdbcFilmDAO implements FilmDAO {
     @Override
     public List<Film> findAll() {
         String query = "SELECT * FROM FILM JOIN Realisateur ON film.realisateur_id = Realisateur.id";
-
 
         try {
             return jdbcTemplate.query(query, new FilmRowMapper());
@@ -81,7 +79,8 @@ public class JdbcFilmDAO implements FilmDAO {
         jdbcTemplate.update(query, film.getTitre(), film.getDuree(), film.getRealisateur().getId());
 
         query = "SELECT id FROM FILM WHERE titre = ? AND duree = ? and realisateur_id = ?";
-        film.setId(jdbcTemplate.queryForObject(query, Long.class, film.getTitre(), film.getDuree(), film.getRealisateur().getId()));
+        film.setId(jdbcTemplate.queryForObject(query, Long.class, film.getTitre(), film.getDuree(),
+                film.getRealisateur().getId()));
 
         return film;
     }
@@ -106,8 +105,7 @@ public class JdbcFilmDAO implements FilmDAO {
 
     @Override
     public List<Film> findByRealisateurId(long realisateurId) {
-        String query =
-                "SELECT * FROM Film JOIN Realisateur ON Film.realisateur_id = Realisateur.id  WHERE realisateur_id = ?";
+        String query = "SELECT * FROM Film JOIN Realisateur ON Film.realisateur_id = Realisateur.id  WHERE realisateur_id = ?";
 
         try {
             return jdbcTemplate.query(query, new JdbcFilmDAO.FilmNoRealisateurRowMapper(), realisateurId);
@@ -117,6 +115,3 @@ public class JdbcFilmDAO implements FilmDAO {
 
     }
 }
-
-
-

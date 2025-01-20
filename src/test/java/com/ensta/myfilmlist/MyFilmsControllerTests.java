@@ -5,53 +5,16 @@ import com.ensta.myfilmlist.persistence.controller.impl.FilmResourceImpl;
 import com.ensta.myfilmlist.dto.FilmDTO;
 import com.ensta.myfilmlist.dto.RealisateurDTO;
 import com.ensta.myfilmlist.form.FilmForm;
-import com.ensta.myfilmlist.model.Film;
-import com.ensta.myfilmlist.model.Realisateur;
 import com.ensta.myfilmlist.service.impl.MyFilmsServiceImpl;
 import com.ensta.myfilmlist.exception.ServiceException;
-import com.ensta.myfilmlist.mapper.FilmMapper;
-import com.ensta.myfilmlist.mapper.RealisateurMapper;
-import com.ensta.myfilmlist.model.Realisateur;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 
 import org.springframework.http.ResponseEntity;
 
-import com.ensta.myfilmlist.dto.FilmDTO;
-import com.ensta.myfilmlist.dto.RealisateurDTO;
 import com.ensta.myfilmlist.exception.ControllerException;
-import com.ensta.myfilmlist.exception.ServiceException;
-import com.ensta.myfilmlist.form.FilmForm;
-import com.ensta.myfilmlist.persistence.controller.FilmRessource;
-import com.ensta.myfilmlist.service.MyFilmsService;
-import io.swagger.annotations.ApiOperation;
-import io.swagger.annotations.ApiResponse;
-import io.swagger.annotations.ApiResponses;
-import io.swagger.v3.oas.annotations.Parameter;
-import org.springframework.web.bind.annotation.RequestBody;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
-import org.springframework.http.MediaType;
-import org.springframework.http.ResponseEntity;
-import org.springframework.validation.annotation.Validated;
-import org.springframework.web.bind.annotation.CrossOrigin;
-import org.springframework.web.bind.annotation.DeleteMapping;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RestController;
-
-import org.springframework.jdbc.core.JdbcTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
-
-import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.List;
-import java.util.Optional;
 
 import static org.junit.jupiter.api.Assertions.*;
 
@@ -94,9 +57,11 @@ class MyFilmsControllerTests {
         // Assert
         assertNotNull(response);
         assertEquals(200, response.getStatusCodeValue()); // Vérifie que le statut HTTP est 200 (OK)
-        assertEquals(2, response.getBody().size()); // Vérifie que deux films sont retournés
-        assertEquals("Film 1", response.getBody().get(0).getTitre());
-        assertEquals("Film 2", response.getBody().get(1).getTitre());
+        List<FilmDTO> body = response.getBody();
+        assertNotNull(body);
+        assertEquals(2, body.size()); // Vérifie que deux films sont retournés
+        assertEquals("Film 1", body.get(0).getTitre());
+        assertEquals("Film 2", body.get(1).getTitre());
 
         verify(myFilmsService, times(1)).findAllFilms(); // Vérifie que le service a été appelé une fois
     }
@@ -134,8 +99,10 @@ class MyFilmsControllerTests {
         // Assert
         assertNotNull(response);
         assertEquals(200, response.getStatusCodeValue()); // Vérifie que le statut HTTP est 200 (OK)
-        assertEquals("Inception", response.getBody().getTitre()); // Vérifie le titre du film
-        assertEquals(filmId, response.getBody().getId()); // Vérifie l'ID du film
+        FilmDTO body = response.getBody();
+        assertNotNull(body);
+        assertEquals("Inception", body.getTitre()); // Vérifie le titre du film
+        assertEquals(filmId, body.getId()); // Vérifie l'ID du film
 
         verify(myFilmsService, times(1)).findFilmById(filmId); // Vérifie que le service a été appelé une fois
     }
@@ -180,8 +147,10 @@ class MyFilmsControllerTests {
         // Assert
         assertNotNull(response);
         assertEquals(200, response.getStatusCodeValue()); // Vérifie que le statut HTTP est 200 (OK)
-        assertEquals("Inception", response.getBody().getTitre()); // Vérifie le titre du film
-        assertEquals(148, response.getBody().getDuree()); // Vérifie la durée du film
+        FilmDTO body = response.getBody();
+        assertNotNull(body);
+        assertEquals("Inception", body.getTitre()); // Vérifie le titre du film
+        assertEquals(148, body.getDuree()); // Vérifie la durée du film
 
         verify(myFilmsService, times(1)).createFilm(filmForm); // Vérifie que le service a été appelé une fois
     }
@@ -221,7 +190,9 @@ class MyFilmsControllerTests {
         // Assert
         assertNotNull(response);
         assertEquals(200, response.getStatusCodeValue()); // Vérifie que le statut HTTP est OK
-        assertTrue(response.getBody()); // Vérifie que la réponse contient `true`
+        Boolean body = response.getBody();
+        assertNotNull(body);
+        assertTrue(body); // Vérifie que la réponse contient `true`
         verify(myFilmsService, times(1)).deleteFilm(filmId); // Vérifie que le service a été appelé une fois
     }
 
@@ -266,9 +237,11 @@ class MyFilmsControllerTests {
         // Assert
         assertNotNull(response);
         assertEquals(200, response.getStatusCodeValue()); // Vérifie que le statut HTTP est 200 (OK)
-        assertEquals(2, response.getBody().size()); // Vérifie que deux réalisateurs sont retournés
-        assertEquals("Spielberg", response.getBody().get(0).getNom());
-        assertEquals("Nolan", response.getBody().get(1).getNom());
+        List<RealisateurDTO> body = response.getBody();
+        assertNotNull(body);
+        assertEquals(2, body.size()); // Vérifie que deux réalisateurs sont retournés
+        assertEquals("Spielberg", body.get(0).getNom());
+        assertEquals("Nolan", body.get(1).getNom());
 
         verify(myFilmsService, times(1)).findAllRealisateurs(); // Vérifie que le service a été appelé une fois
     }

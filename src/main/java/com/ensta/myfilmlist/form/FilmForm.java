@@ -13,7 +13,7 @@ public class FilmForm {
 
 	@NonNull
 	@NotBlank
-	private String titre;
+	private String titre = "";
 
 	@Positive
 	private int duree;

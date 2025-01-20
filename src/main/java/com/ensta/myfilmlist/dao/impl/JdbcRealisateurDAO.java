@@ -4,10 +4,10 @@ import com.ensta.myfilmlist.dao.FilmDAO;
 import com.ensta.myfilmlist.dao.RealisateurDAO;
 import com.ensta.myfilmlist.model.Realisateur;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.context.annotation.Primary;
 import org.springframework.dao.EmptyResultDataAccessException;
 import org.springframework.jdbc.core.JdbcTemplate;
 import org.springframework.jdbc.core.RowMapper;
+import org.springframework.lang.NonNull;
 import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
@@ -30,7 +30,7 @@ public class JdbcRealisateurDAO implements RealisateurDAO {
     private class RealisateurRowMapper implements RowMapper<Realisateur> {
 
         @Override
-        public Realisateur mapRow(ResultSet rs, int rowNum) throws SQLException {
+        public Realisateur mapRow(@NonNull ResultSet rs, int rowNum) throws SQLException {
 
             Realisateur re = new Realisateur();
             re.setNom(rs.getString("nom"));
@@ -40,7 +40,6 @@ public class JdbcRealisateurDAO implements RealisateurDAO {
             re.setId(rs.getInt("id"));
 
             re.setFilmRealises(filmDAO.findByRealisateurId(re.getId()));
-
 
             return re;
         }
@@ -61,14 +60,13 @@ public class JdbcRealisateurDAO implements RealisateurDAO {
     }
 
     @Override
-    public Realisateur
-    findByNomAndPrenom(String nom, String prenom) throws EmptyResultDataAccessException {
+    public Realisateur findByNomAndPrenom(String nom, String prenom) throws EmptyResultDataAccessException {
         String query = "SELECT * FROM Realisateur WHERE nom = ? AND prenom = ?";
 
         try {
             return jdbcTemplate.queryForObject(query, new RealisateurRowMapper(), nom, prenom);
         } catch (Exception e) {
-            throw  new EmptyResultDataAccessException("Realisateur non trouvé ou trouvé plusieurs fois.",1,e);
+            throw new EmptyResultDataAccessException("Realisateur non trouvé ou trouvé plusieurs fois.", 1, e);
         }
     }
 
