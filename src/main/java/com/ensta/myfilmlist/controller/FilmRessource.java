@@ -1,4 +1,4 @@
-package com.ensta.myfilmlist.persistence.controller;
+package com.ensta.myfilmlist.controller;
 
 import com.ensta.myfilmlist.dto.FilmDTO;
 import com.ensta.myfilmlist.dto.RealisateurDTO;
@@ -17,8 +17,13 @@ import javax.validation.Valid;
 @Tag(name = "Film", description = "Opération sur les films")
 public interface FilmRessource {
     ResponseEntity<List<FilmDTO>> getAllFilms() throws ControllerException;
+
     ResponseEntity<FilmDTO> getFilmById(long id) throws ControllerException;
+
     ResponseEntity<FilmDTO> createFilm(@Valid FilmForm filmForm) throws ControllerException;
+
     ResponseEntity<Boolean> deleteFilm(long filmId) throws ControllerException;
+
     ResponseEntity<List<RealisateurDTO>> getAllRealisateurs() throws ControllerException;
+
 }

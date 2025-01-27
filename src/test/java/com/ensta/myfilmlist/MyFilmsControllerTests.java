@@ -1,7 +1,6 @@
 package com.ensta.myfilmlist;
 
-import com.ensta.myfilmlist.persistence.controller.impl.FilmResourceImpl;
-
+import com.ensta.myfilmlist.controller.impl.FilmResourceImpl;
 import com.ensta.myfilmlist.dto.FilmDTO;
 import com.ensta.myfilmlist.dto.RealisateurDTO;
 import com.ensta.myfilmlist.form.FilmForm;
