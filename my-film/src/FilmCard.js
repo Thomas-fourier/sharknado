@@ -155,7 +155,6 @@ const styles = {
     }
 }
 
-
 export default function FilmCard(props) {
     const [isVisible, setIsVisible] = useState(true);
     const [film, setFilm] = useState(props.film);
@@ -163,6 +162,7 @@ export default function FilmCard(props) {
     const [filmDuree, setFilmDuree] = useState(props.film.duree);
     const [filmId, setFilmId] = useState(props.film.id);
     const [realisateur, setRealisateur] = useState(null);
+    const [isExpanded, setIsExpanded] = useState(false); // Ajout de l'état d'expansion
     const [isModalOpenDeleteFilm, setIsModalOpenDeleteFilm] = useState(false);
     const [isModalOpenEditFilm, setIsModalOpenEditFilm] = useState(false);
 
@@ -179,38 +179,50 @@ export default function FilmCard(props) {
         {isVisible && (
             <Card variant="outlined">
                 <CardContent>
-                    <Typography variant="h5" gutterBottom>
+                    {/* Titre du film cliquable */}
+                    <Typography 
+                        variant="h5" 
+                        gutterBottom 
+                        style={{ cursor: 'pointer', textDecoration: 'underline' }} 
+                        onClick={() => setIsExpanded(!isExpanded)}
+                    >
                         {filmTitre}
                     </Typography>
-                    <Typography variant="body1">
-                        {filmDuree} minutes
-                    </Typography>
-                    {realisateur && (
-                        <Typography variant="body2">
-                            Réalisé par {realisateur.prenom} {realisateur.nom} {realisateur.celebre && '⭐'}
-                        </Typography>
+
+                    {/* Détails visibles uniquement si isExpanded est true */}
+                    {isExpanded && (
+                        <>
+                            <Typography variant="body1">
+                                {filmDuree} minutes
+                            </Typography>
+                            {realisateur && (
+                                <Typography variant="body2">
+                                    Réalisé par {realisateur.prenom} {realisateur.nom} {realisateur.celebre && '⭐'}
+                                </Typography>
+                            )}
+                            <IconButton onClick={() => {setIsModalOpenDeleteFilm(!isModalOpenDeleteFilm); setIsModalOpenEditFilm(false)}}>
+                                <DeleteIcon />
+                            </IconButton>
+                            <IconButton onClick={() => {setIsModalOpenEditFilm(!isModalOpenEditFilm); setIsModalOpenDeleteFilm(false)}}>
+                                <EditIcon />
+                            </IconButton>
+                            <ModalDeleteFilm
+                                isOpen={isModalOpenDeleteFilm}
+                                setIsVisible={setIsVisible} 
+                                id={filmId} 
+                                setIsModalOpen={setIsModalOpenDeleteFilm}
+                            />
+                            <ModalEditFilm
+                                isOpen={isModalOpenEditFilm}
+                                film={film}
+                                setIsModalOpen={setIsModalOpenEditFilm}
+                                setFilm={setFilm}
+                                setFilmDuree={setFilmDuree}
+                                setFilmTitre={setFilmTitre}
+                                setFilmId={setFilmId}
+                            />
+                        </>
                     )}
-                    <IconButton onClick={() => {setIsModalOpenDeleteFilm(!isModalOpenDeleteFilm); setIsModalOpenEditFilm(false)}}>
-                        <DeleteIcon />
-                    </IconButton>
-                    <IconButton onClick={() => {setIsModalOpenEditFilm(!isModalOpenEditFilm); setIsModalOpenDeleteFilm(false)}}>
-                        <EditIcon />
-                    </IconButton>
-                    <ModalDeleteFilm
-                        isOpen={isModalOpenDeleteFilm}
-                        setIsVisible={setIsVisible} 
-                        id={filmId} 
-                        setIsModalOpen={setIsModalOpenDeleteFilm}
-                    />
-                    <ModalEditFilm
-                        isOpen={isModalOpenEditFilm}
-                        film={film}
-                        setIsModalOpen={setIsModalOpenEditFilm}
-                        setFilm={setFilm}
-                        setFilmDuree={setFilmDuree}
-                        setFilmTitre={setFilmTitre}
-                        setFilmId={setFilmId}
-                    />
                 </CardContent>
             </Card>
         )}
