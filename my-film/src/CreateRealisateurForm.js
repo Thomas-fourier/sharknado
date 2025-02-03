@@ -6,21 +6,17 @@ export default function CreateRealisateurForm({ saveRealisateur }) {
     const [prenom, setPrenom] = useState('');
     const [dateNaissance, setDateNaissance] = useState('');
 
-    // Méthode pour gérer la soumission du formulaire
     function handleCreateRealisateur(e) {
         e.preventDefault();
 
-        // Vérification que tous les champs sont remplis
         if (!nom || !prenom || !dateNaissance) {
             alert("Tous les champs doivent être remplis !");
             return;
         }
 
-        // Appeler la fonction onSubmit passée en prop
         saveRealisateur({ nom, prenom, dateNaissance });
         window.location.reload();
 
-        // Réinitialiser les champs après la soumission
         setNom('');
         setPrenom('');
         setDateNaissance('');

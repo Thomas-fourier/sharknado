@@ -8,26 +8,21 @@ export default function CreateFilmForm({ saveFilm }) {
     const [selectedRealisateur, setSelectedRealisateur] = useState('');
     const [realisateurs, setRealisateurs] = useState([]);
 
-    // Récupérer les réalisateurs au démarrage
     useEffect(() => {
         getAllRealisateurs().then((response) => setRealisateurs(response.data));
     }, []);
 
-    // Méthode appelée lors de la soumission du formulaire
     function handleCreateFilm(e) {
         e.preventDefault();
 
-        // Vérification que tous les champs sont remplis
         if (!titre || !duree || !selectedRealisateur) {
             alert("Tous les champs doivent être remplis !");
             return;
         }
 
-        // Appeler la fonction onSubmit passée en prop
         saveFilm({ titre, duree, realisateurId: selectedRealisateur });
         window.location.reload();
 
-        // Réinitialiser les champs après la soumission
         setTitre('');
         setDuree('');
         setSelectedRealisateur('');

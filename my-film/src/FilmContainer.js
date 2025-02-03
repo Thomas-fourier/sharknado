@@ -16,12 +16,10 @@ export default function FilmContainer() {
         });
     }, []);
 
-    // Fonction pour gérer la soumission du formulaire de création de film
     function handleCreateFilm(filmData) {
         postFilm(filmData)
             .then((response) => {
                 alert("Film ajouté avec succès !");
-                // Mettre à jour la liste des films après l'ajout
                 setFilms([...films, response.data]);
             })
             .catch((error) => {
