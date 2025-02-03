@@ -1,33 +1,42 @@
 package com.ensta.myfilmlist;
 
-import com.ensta.myfilmlist.dao.FilmDAO;
-import com.ensta.myfilmlist.dao.RealisateurDAO;
-import com.ensta.myfilmlist.dto.FilmDTO;
-import com.ensta.myfilmlist.dto.RealisateurDTO;
-import com.ensta.myfilmlist.form.FilmForm;
-import com.ensta.myfilmlist.model.Film;
-import com.ensta.myfilmlist.model.Realisateur;
-import com.ensta.myfilmlist.service.impl.MyFilmsServiceImpl;
-import com.ensta.myfilmlist.exception.ServiceException;
-import com.ensta.myfilmlist.mapper.FilmMapper;
-import com.ensta.myfilmlist.mapper.RealisateurMapper;
-import org.junit.jupiter.api.BeforeEach;
-import org.junit.jupiter.api.Test;
-
-import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
-import org.springframework.boot.test.context.SpringBootTest;
-import org.springframework.transaction.annotation.Transactional;
-
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static org.junit.jupiter.api.Assertions.*;
-
-import static org.mockito.Mockito.*;
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertNotNull;
+import static org.junit.jupiter.api.Assertions.assertNull;
+import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.junit.jupiter.api.Assertions.assertTrue;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
+import static org.mockito.ArgumentMatchers.any;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
+import static org.mockito.Mockito.doNothing;
+import static org.mockito.Mockito.doThrow;
+import static org.mockito.Mockito.never;
+import static org.mockito.Mockito.times;
+import static org.mockito.Mockito.verify;
+import static org.mockito.Mockito.when;
 import org.mockito.MockitoAnnotations;
+import org.springframework.boot.test.autoconfigure.jdbc.AutoConfigureTestDatabase;
+import org.springframework.boot.test.context.SpringBootTest;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.ensta.myfilmlist.dao.FilmDAO;
+import com.ensta.myfilmlist.dao.RealisateurDAO;
+import com.ensta.myfilmlist.dto.FilmDTO;
+import com.ensta.myfilmlist.dto.RealisateurDTO;
+import com.ensta.myfilmlist.exception.ServiceException;
+import com.ensta.myfilmlist.form.FilmForm;
+import com.ensta.myfilmlist.mapper.FilmMapper;
+import com.ensta.myfilmlist.mapper.RealisateurMapper;
+import com.ensta.myfilmlist.model.Film;
+import com.ensta.myfilmlist.model.Realisateur;
+import com.ensta.myfilmlist.service.impl.MyFilmsServiceImpl;
 
 @SpringBootTest
 @AutoConfigureTestDatabase(replace = AutoConfigureTestDatabase.Replace.ANY)

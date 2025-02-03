@@ -230,10 +230,8 @@ class MyFilmsControllerTests {
         // Simuler le comportement de findAllRealisateurs() du service
         when(myFilmsService.findAllRealisateurs()).thenReturn(mockRealisateurList);
 
-        // Act
         ResponseEntity<List<RealisateurDTO>> response = filmResourceImpl.getAllRealisateurs();
 
-        // Assert
         assertNotNull(response);
         assertEquals(200, response.getStatusCodeValue()); // Vérifie que le statut HTTP est 200 (OK)
         List<RealisateurDTO> body = response.getBody();
@@ -261,4 +259,3 @@ class MyFilmsControllerTests {
     }
 }
 
-/////////////////////////////////////////// CONTROLLER EXCEPTION A TRAITER
