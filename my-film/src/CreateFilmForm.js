@@ -25,6 +25,7 @@ export default function CreateFilmForm({ saveFilm }) {
 
         // Appeler la fonction onSubmit passée en prop
         saveFilm({ titre, duree, realisateurId: selectedRealisateur });
+        window.location.reload();
 
         // Réinitialiser les champs après la soumission
         setTitre('');

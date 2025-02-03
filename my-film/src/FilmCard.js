@@ -12,6 +12,7 @@ import React from 'react';
 function onConfirmDeleteFilm(setIsVisible, id) {
     deleteFilm(id);
     setIsVisible(false);
+    window.location.reload();
 }
 
 
@@ -68,9 +69,7 @@ function EditFilmForm({film, setFilm, setModalOpen, setFilmDuree, setFilmTitre, 
 
         // fermer le modal
         setModalOpen(false);
-
-        // Mettre à jour le contenu de la slide
-
+        window.location.reload();
 
     }
 
