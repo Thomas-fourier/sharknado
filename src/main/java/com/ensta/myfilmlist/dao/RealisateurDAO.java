@@ -36,4 +36,10 @@ public interface RealisateurDAO {
      */
     Realisateur update(Realisateur realisateur);
 
+    /**
+     * Save a new realisateur in the database.
+     * @param realisateur The realisateur to be saved.
+     * @return the saved Realisateur.
+     */
+    Realisateur save(Realisateur realisateur);
 }

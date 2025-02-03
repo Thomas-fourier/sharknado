@@ -56,6 +56,12 @@ public interface MyFilmsService {
     List<RealisateurDTO> findAllRealisateurs() throws ServiceException;
 
     /**
+     * Create new realisateur.
+     * @return DTO of realisateur
+     * @throws ServiceException if a connection error occurs
+     */
+    public RealisateurDTO createRealisateur(RealisateurDTO realisateurDTO) throws ServiceException;
+    /**
      * Find a realisateur by its name and surname
      * @param nom relisateur's name
      * @param prenom realisateur's surname

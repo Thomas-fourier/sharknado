@@ -1,7 +1,9 @@
 import { useState, useEffect } from "react";
 import FilmList from './FilmList.js';
 import CreateFilmForm from './CreateFilmForm.js';
+import CreateRealisateurForm from './CreateRealisateurForm.js';
 import { getAllFilms, postFilm } from "./api/FilmApi";
+import { postRealisateur } from "./api/RealisateurApi";
 
 export default function FilmContainer() {
     const [films, setFilms] = useState([]);
@@ -27,10 +29,21 @@ export default function FilmContainer() {
             });
     }
 
+    function handleCreateRealisateur(realisateurData) {
+        postRealisateur(realisateurData)
+            .then(() => {
+                alert("Réalisateur ajouté avec succès !");
+            })
+            .catch((error) => {
+                alert("Erreur lors de l'ajout du réalisateur: " + error.message);
+            });
+    }
+
     return (
         <>
             <FilmList films={films} />
             <CreateFilmForm saveFilm={handleCreateFilm} />
+            <CreateRealisateurForm saveRealisateur={handleCreateRealisateur} />
         </>
     );
 }

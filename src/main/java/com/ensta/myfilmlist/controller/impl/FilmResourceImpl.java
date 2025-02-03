@@ -110,5 +110,18 @@ public class FilmResourceImpl implements FilmRessource {
             throw new ControllerException(e.getMessage());
         }
     }
+    @Override
+    @PostMapping("/createRealisateur")
+    @CrossOrigin(origins = "http://localhost:3000")
+    @ApiOperation(value = "Ajouter un réalisateur", notes = "Ajoute un réalisateur et renvoie le RealisateurDTO créé", produces = MediaType.APPLICATION_JSON_VALUE)
+    public ResponseEntity<RealisateurDTO> createRealisateur(
+            @RequestBody RealisateurDTO realisateurDTO) throws ControllerException {
+        try {
+            RealisateurDTO createdRealisateur = myFilmsService.createRealisateur(realisateurDTO);
+            return new ResponseEntity<>(createdRealisateur, HttpStatus.CREATED);
+        } catch (ServiceException e) {
+            throw new ControllerException(e.getMessage());
+        }
+    }
 
 }

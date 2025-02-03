@@ -8,6 +8,7 @@ import com.ensta.myfilmlist.form.FilmForm;
 import io.swagger.annotations.Api;
 import io.swagger.v3.oas.annotations.tags.Tag;
 import org.springframework.http.ResponseEntity;
+import org.springframework.web.bind.annotation.RequestBody;
 
 import java.util.List;
 
@@ -25,5 +26,8 @@ public interface FilmRessource {
     ResponseEntity<Boolean> deleteFilm(long filmId) throws ControllerException;
 
     ResponseEntity<List<RealisateurDTO>> getAllRealisateurs() throws ControllerException;
+
+    ResponseEntity<RealisateurDTO> createRealisateur(
+            @RequestBody RealisateurDTO realisateurDTO) throws ControllerException;
 
 }

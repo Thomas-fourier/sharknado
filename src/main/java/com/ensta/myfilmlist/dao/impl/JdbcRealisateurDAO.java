@@ -93,4 +93,15 @@ public class JdbcRealisateurDAO implements RealisateurDAO {
             throw e;
         }
     }
+
+    @Override
+    public Realisateur save(Realisateur realisateur) {
+        String query = "INSERT INTO Realisateur (nom, prenom, date_naissance, celebre) VALUES (?, ?, ?, ?)";
+        try {
+            jdbcTemplate.update(query, realisateur.getNom(), realisateur.getPrenom(), realisateur.getDateNaissance(), realisateur.getCelebre());
+            return realisateur;
+        } catch (Exception e) {
+            throw e;
+        }
+    }
 }

@@ -1,6 +1,7 @@
 import axios from 'axios';
 
 const REALISATEUR_URI = 'http://localhost:8080/realisateur'; // URL de l'API des réalisateurs
+const POST_URI = 'http://localhost:8080/createRealisateur';
 
 /**
  * Récupère tous les réalisateurs
@@ -14,7 +15,7 @@ export function getAllRealisateurs() {
  * @param {Object} realisateur - Les données du réalisateur à ajouter
  */
 export function postRealisateur(realisateur) {
-    return axios.post(REALISATEUR_URI, realisateur);
+    return axios.post(POST_URI, realisateur);
 }
 
 /**

@@ -51,4 +51,10 @@ public class JpaRealisateurDAO implements RealisateurDAO {
     public Realisateur update(Realisateur realisateur) {
         return entityManager.merge(realisateur);
     }
+
+    @Override
+    public Realisateur save(Realisateur realisateur) {
+        entityManager.persist(realisateur);
+        return realisateur;
+    }
 }

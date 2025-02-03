@@ -110,6 +110,22 @@ public class MyFilmsServiceImpl implements MyFilmsService {
 
     @Override
     @Transactional
+    public RealisateurDTO createRealisateur(RealisateurDTO realisateurDTO) throws ServiceException {
+        try {
+            // Convertir RealisateurDTO en modèle Realisateur
+            Realisateur realisateur = RealisateurMapper.convertRealisateurDTOToRealisateur(realisateurDTO);
+            
+            // Sauvegarder le réalisateur dans la base de données
+            Realisateur savedRealisateur = realisateurDAO.save(realisateur);
+            
+            // Convertir le modèle Realisateur en DTO pour la réponse
+            return RealisateurMapper.convertRealisateurToRealisateurDTO(savedRealisateur);
+        } catch (Exception e) {
+            throw new ServiceException("Erreur lors de la création du réalisateur.", e);
+        }
+    }
+    @Override
+    @Transactional
     public void deleteFilm(long id) throws ServiceException {
         Optional<Film> film = filmDAO.findById(id);
 
