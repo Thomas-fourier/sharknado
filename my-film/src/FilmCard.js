@@ -10,7 +10,7 @@ import React from 'react';
 
 
 function onConfirmDeleteFilm(setIsVisible, id) {
-    deleteFilm(id);
+    deleteFilm(id).then(() => { window.location.reload() });
     setIsVisible(false);
 }
 
@@ -63,6 +63,8 @@ function EditFilmForm({ film, setFilm, setModalOpen, setFilmDuree, setFilmTitre,
                         setDuree(res.data.duree);
                         setFilmId(res.data.id);
                         setFilmTitre(res.data.titre);
+
+                        window.location.reload();
                     })
             });
 
